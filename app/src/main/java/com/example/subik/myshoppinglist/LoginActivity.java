@@ -2,23 +2,30 @@ package com.example.subik.myshoppinglist;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText editUsername;
-    TextView textSignup, textAdmin;
-    Button btnLogin;
+    EditText editUsername, editPassword;
+    TextView textSignup, textCustomer, textAdmin;
+    Button btnLogin, btnAdminLogin;
+    RelativeLayout customerLayout, adminLayout;
     private static final int REQUEST_SIGNUP = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+              //  WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Authenticating...");
                 progressDialog.show();
-               new android.os.Handler().postDelayed(new Runnable() {
+                new android.os.Handler().postDelayed(new Runnable() {
                     public void run() {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
@@ -52,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        textAdmin.setOnClickListener(new View.OnClickListener() {
+       /* textAdmin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -61,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-        });
+        });*/
 
 
     }
@@ -93,7 +100,40 @@ public class LoginActivity extends AppCompatActivity {
     private void init() {
         editUsername = findViewById(R.id.input_userName);
         textSignup = findViewById(R.id.link_signup);
-        textAdmin = findViewById(R.id.link_admin);
         btnLogin = findViewById(R.id.btn_login);
+        editPassword = findViewById(R.id.admin_password);
+        btnAdminLogin = findViewById(R.id.btn_admin_login);
+        customerLayout = findViewById(R.id.customerLogin);
+        adminLayout = findViewById(R.id.adminLogin);
+        textCustomer = findViewById(R.id.customertxt);
+        textAdmin = findViewById(R.id.admintxt);
+        textCustomer.setOnClickListener(listner);
+        textAdmin.setOnClickListener(listner);
     }
+
+    View.OnClickListener listner = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.customertxt:
+                    textCustomer.setTextColor(getResources().getColor(R.color.black));
+                    textAdmin.setTextColor(getResources().getColor(R.color.colorIcons));
+                    textCustomer.setTypeface(Typeface.DEFAULT_BOLD);
+                    textAdmin.setTypeface(Typeface.DEFAULT);
+                    customerLayout.setVisibility(View.VISIBLE);
+                    adminLayout.setVisibility(View.GONE);
+                    break;
+                case R.id.admintxt:
+                    textAdmin.setTextColor(getResources().getColor(R.color.black));
+                    textCustomer.setTextColor(getResources().getColor(R.color.colorIcons));
+                    textAdmin.setTypeface(Typeface.DEFAULT_BOLD);
+                    textCustomer.setTypeface(Typeface.DEFAULT);
+                    adminLayout.setVisibility(View.VISIBLE);
+                    customerLayout.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

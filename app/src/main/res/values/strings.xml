@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">MyShoppingList</string>
     <string name="login_hint">Enter your Username</string>
-    <string name="login_button">Login</string>
+    <string name="login_button">Login as Customer</string>
+    <string name="login_admin_button">Login as Admin</string>
     <string name="signup_link">No account yet? Create one</string>
-    <string name="admin_link">Admin Login</string>
     <string name="signup_name">Full Name</string>
     <string name="signup_username">Username</string>
     <string name="signup_button">Create Account</string>
     <string name="login_link">Already a member? Login</string>
+    <string name="admin_hint">Password</string>
+    <string name="navigation_customer">Customer Login</string>
+    <string name="navigation_admin">Admin Login</string>
 </resources>
