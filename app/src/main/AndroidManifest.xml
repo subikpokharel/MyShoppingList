@@ -18,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/NoActionBar">
+            >
+        </activity>
+        <activity android:name=".SignupActivity" android:theme="@style/NoActionBar" />
+        <activity android:name=".AdminActivity" android:theme="@style/NoActionBar"/>
+        <activity android:name=".HomeActivity"></activity>
     </application>
 
 </manifest>
