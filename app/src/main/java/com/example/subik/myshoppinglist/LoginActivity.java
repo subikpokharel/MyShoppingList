@@ -14,6 +14,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editUsername;
     TextView textSignup, textAdmin;
     Button btnLogin;
+    private static final int REQUEST_SIGNUP = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Start SignUp Activity
                 Intent i = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(i);
-                //startActivityForResult(i, REQUEST_SIGNUP);
+                //startActivity(i);
+                startActivityForResult(i, REQUEST_SIGNUP);
             }
         });
 
@@ -57,13 +58,36 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Start SignUp Activity
                 Intent i = new Intent(LoginActivity.this, AdminActivity.class);
-                //startActivityForResult(i, REQUEST_SIGNUP);
                 startActivity(i);
                 finish();
             }
         });
 
 
+    }
+
+    //once signup is completed, the result comes here
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
+                new android.os.Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        //after signup, presently, after 5s delay subik() is called.
+                        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }, 0);
+            }
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
     }
 
     private void init() {
