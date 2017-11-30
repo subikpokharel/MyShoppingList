@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.subik.myshoppinglist.database.DatabaseManager;
 import com.example.subik.myshoppinglist.parsing.Customer;
@@ -44,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void signup() {
         if (!validate()){
-            //onSignupFailed();
+            onSignupFailed();
             return;
         }
         btnSignup.setEnabled(false);
@@ -59,16 +60,35 @@ public class SignupActivity extends AppCompatActivity {
         Customer customer = new Customer();
         customer.setName(name);
         customer.setUsername(username);
-        manager.signup(customer);
+        long status = manager.signup(customer);
+        //Toast.makeText(getBaseContext(), String.valueOf(status), Toast.LENGTH_LONG).show();
+        if (status != -1){
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            onSignupSuccess();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }else{
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On failed call onSignupFailed
+                            progressDialog.dismiss();
+                            onSignupFailed();
+                        }
+                    }, 2000);
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onSignupSuccess();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+        }
+    }
+
+    private void onSignupFailed() {
+        Toast.makeText(getBaseContext(), "Signup failed", Toast.LENGTH_LONG).show();
+        editName.setText("");
+        editUser.setText("");
+        btnSignup.setEnabled(true);
     }
 
     private boolean validate() {

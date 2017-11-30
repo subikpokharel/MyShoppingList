@@ -30,7 +30,7 @@ public class DatabaseManager {
         db=new DatabaseHandler(context).getWritableDatabase();
     }
 
-    public void signup(Customer customer) {
+    public long signup(Customer customer) {
         ContentValues mValues = new ContentValues();
         String query = "select * from tbl_customer";
         Cursor cursor = db.rawQuery(query, null);
@@ -38,6 +38,9 @@ public class DatabaseManager {
         mValues.put(DatabaseHandler.COLUMN_ID, count);
         mValues.put(DatabaseHandler.COLUMN_NAME, customer.getName());
         mValues.put(DatabaseHandler.COLUMN_USERNAME, customer.getUsername());
-        db.insert(DatabaseHandler.TABLE_CUSTOMERS,null,mValues);
+        long rowInserted = db.insert(DatabaseHandler.TABLE_CUSTOMERS,null,mValues);
+        return rowInserted;
     }
+
+
 }

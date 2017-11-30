@@ -1,6 +1,7 @@
 package com.example.subik.myshoppinglist.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -29,7 +30,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             COLUMN_NAME+" text not null, "+
             COLUMN_USERNAME+" text unique not null );";
 
-    //SQLiteDatabase db;
+    SQLiteDatabase db;
+    String query;
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CUSTOMER);
@@ -43,6 +45,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             onCreate(db);
         }
     }
+
+    public String[] login(String username){
+        db = this.getReadableDatabase();
+        query = "select name,id from "+TABLE_CUSTOMERS+" where "+COLUMN_USERNAME+" = ?";
+        Cursor cursor = db.rawQuery(query,  new String[] { username });
+        String [] result = new String[2];
+        result [0] = "Not Found";
+        if (cursor.moveToFirst()) {
+            result [0] = cursor.getString(0);
+            result [1] = cursor.getString(1);
+        }
+        return result;
+    }
+
 }
 
 

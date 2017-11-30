@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.subik.myshoppinglist.database.DatabaseHandler;
+import com.example.subik.myshoppinglist.database.DatabaseManager;
+import com.example.subik.myshoppinglist.myapplication.MyApplication;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,11 +24,16 @@ public class LoginActivity extends AppCompatActivity {
     Button btnCustomerLogin, btnAdminLogin;
     RelativeLayout customerLayout, adminLayout;
     private static final int REQUEST_SIGNUP = 0;
+    DatabaseHandler databaseHandler;
+    MyApplication myApplication;
+    private String[] databaseresult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        databaseHandler = new DatabaseHandler(this);
+        myApplication = (MyApplication) getApplication();
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
               //  WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
@@ -32,19 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //btnLogin.setEnabled(false);
-                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage("Authenticating...");
-                progressDialog.show();
-                new android.os.Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
-
-
+               functionLogin();
             }
         });
 
@@ -59,6 +57,71 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void functionLogin() {
+        if (!validate()) {
+            //if the entered details are not valid, goto the following function
+            onLoginFailed();
+            return;
+        }
+        btnCustomerLogin.setEnabled(false);
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+        String username = editUsername.getText().toString();
+        databaseresult = databaseHandler.login(username);
+        if (!databaseresult[0].equals("Not Found")){
+            new android.os.Handler().postDelayed(new Runnable() {
+                public void run() {
+                    /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);*/
+                    onLoginSuccess();
+                    progressDialog.dismiss();
+                }
+            }, 3000);
+        }else{
+            new android.os.Handler().postDelayed(new Runnable() {
+                public void run() {
+                    progressDialog.dismiss();
+                    onLoginFailed();
+                }
+            }, 2000);
+        }
+
+    }
+
+    private void onLoginSuccess() {
+        btnCustomerLogin.setEnabled(true);
+        String username = editUsername.toString();
+        String name = databaseresult[0];
+        String id = databaseresult[1];
+        editUsername.setText("");
+        //Toast.makeText(LoginActivity.this,name+" "+ id, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        myApplication.saveToken("Customer_Name", name);
+        myApplication.saveToken("Customer_Username", username);
+        myApplication.saveToken("Customer_ID", id);
+        startActivity(intent);
+    }
+
+    private void onLoginFailed() {
+        Toast.makeText(LoginActivity.this, "Username Don't Match", Toast.LENGTH_LONG).show();
+        btnCustomerLogin.setEnabled(true);
+        editUsername.setText("");
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+        String username = editUsername.getText().toString();
+        if (username.isEmpty()) {
+            editUsername.setError("Please enter a valid username");
+            valid = false;
+        } else {
+            editUsername.setError(null);
+        }
+        return valid;
     }
 
     //once signup is completed, the result comes here
@@ -97,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
         textAdmin = findViewById(R.id.admintxt);
         textCustomer.setOnClickListener(listner);
         textAdmin.setOnClickListener(listner);
+
     }
 
     View.OnClickListener listner = new View.OnClickListener() {
