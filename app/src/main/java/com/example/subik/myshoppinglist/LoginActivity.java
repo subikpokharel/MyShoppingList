@@ -45,6 +45,33 @@ public class LoginActivity extends AppCompatActivity {
                functionLogin();
             }
         });
+        btnAdminLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Authenticating...");
+                progressDialog.show();
+                final String password = editPassword.getText().toString();
+                new android.os.Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (password.equals("admin")){
+                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            myApplication.saveToken("Admin_Name", "admin");
+                            startActivity(intent);
+                            editPassword.setText("");
+                            progressDialog.dismiss();
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                            editPassword.setText("");
+                            progressDialog.dismiss();
+                        }
+
+                    }
+                }, 3000);
+
+            }
+        });
 
         textSignup.setOnClickListener(new View.OnClickListener() {
 
@@ -107,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginFailed() {
-        Toast.makeText(LoginActivity.this, "Username Don't Match", Toast.LENGTH_LONG).show();
+        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
         btnCustomerLogin.setEnabled(true);
         editUsername.setText("");
     }

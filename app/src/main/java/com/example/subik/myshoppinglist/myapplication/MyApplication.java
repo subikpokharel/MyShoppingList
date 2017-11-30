@@ -39,4 +39,13 @@ public class MyApplication extends Application {
 
         return  sharedPreferences.getString(key,null);
     }
+
+    public void  removeToken(String key){
+        SharedPreferences.Editor mEditor = sharedPreferences.edit();
+        mEditor.remove(key);
+        //mEditor.putString(key, value);
+        mEditor.apply();
+
+    }
+
 }

@@ -11,4 +11,11 @@
     <string name="admin_hint">Password</string>
     <string name="navigation_customer">Customer Login</string>
     <string name="navigation_admin">Admin Login</string>
+
+
+    <string-array name="dashboard">
+        <item>Enter Product</item>
+        <item>Enter Coupon</item>
+    </string-array>
+    <string name="logout">Logout</string>
 </resources>
