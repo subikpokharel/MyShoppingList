@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -187,6 +190,17 @@ public class LoginActivity extends AppCompatActivity {
         textAdmin = findViewById(R.id.admintxt);
         textCustomer.setOnClickListener(listner);
         textAdmin.setOnClickListener(listner);
+        LoginActivity.makeTextViewHyperlink(textSignup);
+
+    }
+
+    private static void makeTextViewHyperlink(TextView textSignup) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder( );
+        ssb.append( textSignup.getText( ) );
+        ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+        textSignup.setText( ssb, TextView.BufferType.SPANNABLE );
+
 
     }
 

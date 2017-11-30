@@ -13,9 +13,7 @@
     <string name="navigation_admin">Admin Login</string>
 
 
-    <string-array name="dashboard">
-        <item>Enter Product</item>
-        <item>Enter Coupon</item>
-    </string-array>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_enter_coupon">Enter Coupon</string>
     <string name="logout">Logout</string>
 </resources>

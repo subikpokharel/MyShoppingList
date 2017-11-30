@@ -3,6 +3,9 @@ package com.example.subik.myshoppinglist;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,5 +128,16 @@ public class SignupActivity extends AppCompatActivity {
         editUser = findViewById(R.id.signup_username);
         btnSignup = findViewById(R.id.btn_signup);
         textLogin = findViewById(R.id.link_login);
+        SignupActivity.makeTextViewHyperlink(textLogin);
+    }
+
+    private static void makeTextViewHyperlink(TextView textLogin) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder( );
+        ssb.append( textLogin.getText( ) );
+        ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+        textLogin.setText( ssb, TextView.BufferType.SPANNABLE );
+
+
     }
 }
