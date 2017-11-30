@@ -8,15 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.subik.myshoppinglist.database.DatabaseManager;
+import com.example.subik.myshoppinglist.parsing.Customer;
+
 public class SignupActivity extends AppCompatActivity {
 
     EditText editName, editUser;
     Button btnSignup;
     TextView textLogin;
+    DatabaseManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        manager = DatabaseManager.getDatabaseManager(this);
         init();
 
         //on Create Account clicked
@@ -38,12 +43,23 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void signup() {
+        if (!validate()){
+            //onSignupFailed();
+            return;
+        }
         btnSignup.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+
+        String name = editName.getText().toString();
+        String username = editUser.getText().toString();
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setUsername(username);
+        manager.signup(customer);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -53,6 +69,26 @@ public class SignupActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 3000);
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+        String name = editName.getText().toString();
+        String username = editUser.getText().toString();
+
+        if (name.isEmpty()) {
+            editName.setError("Please enter a name");
+            valid = false;
+        } else {
+            editName.setError(null);
+        }
+        if (username.isEmpty()) {
+            editUser.setError("Please enter a valid username");
+            valid = false;
+        } else {
+            editName.setError(null);
+        }
+        return valid;
     }
 
     private void onSignupSuccess() {

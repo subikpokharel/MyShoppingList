@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText editUsername, editPassword;
     TextView textSignup, textCustomer, textAdmin;
-    Button btnLogin, btnAdminLogin;
+    Button btnCustomerLogin, btnAdminLogin;
     RelativeLayout customerLayout, adminLayout;
     private static final int REQUEST_SIGNUP = 0;
 
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
               //  WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnCustomerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //btnLogin.setEnabled(false);
@@ -59,18 +59,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-       /* textAdmin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //Start SignUp Activity
-                Intent i = new Intent(LoginActivity.this, AdminActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });*/
-
-
     }
 
     //once signup is completed, the result comes here
@@ -100,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     private void init() {
         editUsername = findViewById(R.id.input_userName);
         textSignup = findViewById(R.id.link_signup);
-        btnLogin = findViewById(R.id.btn_login);
+        btnCustomerLogin = findViewById(R.id.btn_login);
         editPassword = findViewById(R.id.admin_password);
         btnAdminLogin = findViewById(R.id.btn_admin_login);
         customerLayout = findViewById(R.id.customerLogin);
