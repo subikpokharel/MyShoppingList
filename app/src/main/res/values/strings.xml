@@ -18,4 +18,25 @@
     <string name="menu_enter_coupon">Enter Coupon</string>
     <string name="menu_list_coupon">List Coupons</string>
     <string name="logout">Logout</string>
+
+
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Product Price</string>
+    <string name="product_button">Enter Product</string>
+
+    <string name="coupon_discount">Discount</string>
+    <string name="coupon_products">Product List</string>
+    <string name="coupon_button">Enter Coupon</string>
+
+
+    <string-array name="sports_array">
+        <item>Shuttle Badminton</item>
+        <item>Tennis</item>
+        <item>Table Tennis</item>
+        <item>Basket Ball</item>
+        <item>Foot Ball</item>
+        <item>Volley Ball</item>
+        <item>Hockey</item>
+        <item>Swimming</item>
+    </string-array>
 </resources>

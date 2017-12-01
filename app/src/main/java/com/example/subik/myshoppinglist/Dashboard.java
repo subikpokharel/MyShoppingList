@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,6 +54,26 @@ public class Dashboard extends AppCompatActivity {
         lvProducts.setAdapter(productAdapter);
     }
 
+    public void updatePrice(View view){
+
+        //ListAdapter productAdapter = lvProducts.getAdapter();
+       /* ProductAdapter productAdapter = new ProductAdapter(this,R.layout.product_data,productArrayList);
+        lvProducts.setAdapter(productAdapter);*/
+
+       //ArrayList<Product> list =
+
+
+        //Toast.makeText(this,String.valueOf(productAdapter.getItem(4)),Toast.LENGTH_LONG).show();
+        //databaseManager
+        //Toast.makeText(this,String.valueOf(productAdapter.getCount()),Toast.LENGTH_SHORT);
+       /* for(int i =productAdapter.getCount(); i>0; i--){
+            Product product = new Product();
+            int id = product.getId();
+            String str = product.getProduct();
+            //Toast.makeText(this,String.valueOf(productAdapter.getItem(i)),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,String.valueOf(id)+" "+str,Toast.LENGTH_SHORT).show();
+        }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,6 +90,10 @@ public class Dashboard extends AppCompatActivity {
         }
         if (id == R.id.nav_enterProduct){
             Intent i = new Intent(getApplicationContext(), EnterProductActivity.class);
+            startActivity(i);
+        }
+        if (id == R.id.nav_enterCoupon){
+            Intent i = new Intent(getApplicationContext(), CouponActivity.class);
             startActivity(i);
         }
         if (id == R.id.nav_logout) {

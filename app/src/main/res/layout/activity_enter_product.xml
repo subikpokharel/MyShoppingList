@@ -21,10 +21,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Product Name" />
+                android:hint="@string/product_name" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--  Username Label -->
+        <!--  Price Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:hint="Product Price" />
+                android:hint="@string/product_price" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
-            android:text="Enter Product"/>
+            android:text="@string/product_button"/>
 
     </LinearLayout>
 

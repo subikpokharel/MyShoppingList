@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
 
-    static Context mcontext;
+    Context mcontext;
     ArrayList<Product> list;
     LayoutInflater mlayoutInflater;
     int resource;
@@ -43,6 +43,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         this.mcontext = context;
         mlayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
 
     @Override
     public int getCount() {
