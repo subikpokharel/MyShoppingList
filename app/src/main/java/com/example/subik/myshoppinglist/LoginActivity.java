@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnCustomerLogin, btnAdminLogin;
     RelativeLayout customerLayout, adminLayout;
     private static final int REQUEST_SIGNUP = 0;
-    DatabaseHandler databaseHandler;
+    DatabaseManager databaseManager;
     MyApplication myApplication;
     private String[] databaseresult;
 
@@ -35,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        databaseHandler = new DatabaseHandler(this);
+        //databaseHandler = new DatabaseHandler(this);
+        databaseManager = DatabaseManager.getDatabaseManager(this);
         myApplication = (MyApplication) getApplication();
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
               //  WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 new android.os.Handler().postDelayed(new Runnable() {
                     public void run() {
                         if (password.equals("admin")){
-                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, Dashboard.class);
                             myApplication.saveToken("Admin_Name", "admin");
                             startActivity(intent);
                             editPassword.setText("");
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
         String username = editUsername.getText().toString();
-        databaseresult = databaseHandler.login(username);
+        databaseresult = databaseManager.login(username);
         if (!databaseresult[0].equals("Not Found")){
             new android.os.Handler().postDelayed(new Runnable() {
                 public void run() {

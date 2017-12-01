@@ -24,48 +24,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_USERNAME = "username";
 
-    private static final String TABLE_CUSTOMER = "CREATE TABLE "+
+    //Table components for Products
+    public static final String TABLE_PRODUCT = "tbl_product";
+    public static final String COLUMN_PID = "id";
+    public static final String COLUMN_PNAME = "name";
+    public static final String COLUMN_PPRICE = "price";
+
+    private static final String CREATE_CUSTOMER = "CREATE TABLE "+
             TABLE_CUSTOMERS+" ( "+
             COLUMN_ID+" integer primary key not null, "+
             COLUMN_NAME+" text not null, "+
             COLUMN_USERNAME+" text unique not null );";
 
-    SQLiteDatabase db;
-    String query;
+    private static final String CREATE_PRODUCT = "CREATE TABLE "+
+            TABLE_PRODUCT+" ( "+
+            COLUMN_PID+" integer primary key not null, "+
+            COLUMN_PNAME+" text unique not null, "+
+            COLUMN_PPRICE+" Real not null );";
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TABLE_CUSTOMER);
+        db.execSQL(CREATE_CUSTOMER);
+        db.execSQL(CREATE_PRODUCT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            String query = "DROP TABLE IF EXISTS " + TABLE_CUSTOMERS;
-            db.execSQL(query);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
             onCreate(db);
         }
     }
 
-    public String[] login(String username){
-        db = this.getReadableDatabase();
-        query = "select name,id from "+TABLE_CUSTOMERS+" where "+COLUMN_USERNAME+" = ?";
-        Cursor cursor = db.rawQuery(query,  new String[] { username });
-        String [] result = new String[2];
-        result [0] = "Not Found";
-        if (cursor.moveToFirst()) {
-            result [0] = cursor.getString(0);
-            result [1] = cursor.getString(1);
-        }
-        return result;
-    }
+
 
 }
-
-
-
-    //SQLiteDatabase sqLiteDatabase;
-/*//Create table Login
-    private static final String TABLE_CREATE = "create table login (id integer primary key not null ," +
-            "name text not null, email text not null, password text not null);";*/
 
 

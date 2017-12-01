@@ -109,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
             editUser.setError("Please enter a valid username");
             valid = false;
         } else {
-            editName.setError(null);
+            editUser.setError(null);
         }
         return valid;
     }

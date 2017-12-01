@@ -6,10 +6,20 @@
         app:showAsAction="never"
         android:orderInCategory="1"/>
 
+    <item android:id="@+id/nav_enterProduct"
+        android:title="@string/menu_enter_product"
+        app:showAsAction="never"
+        android:orderInCategory="2"/>
+
     <item android:id="@+id/nav_enterCoupon"
         android:title="@string/menu_enter_coupon"
         app:showAsAction="never"
-        android:orderInCategory="2"/>
+        android:orderInCategory="3"/>
+
+    <item android:id="@+id/nav_listCoupon"
+        android:title="@string/menu_list_coupon"
+        app:showAsAction="never"
+        android:orderInCategory="4"/>
 
     <item android:id="@+id/nav_logout"
         android:title="@string/logout"

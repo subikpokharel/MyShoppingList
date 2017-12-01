@@ -8,19 +8,50 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.subik.myshoppinglist.adapter.ProductAdapter;
+import com.example.subik.myshoppinglist.database.DatabaseManager;
 import com.example.subik.myshoppinglist.myapplication.MyApplication;
+import com.example.subik.myshoppinglist.parsing.Product;
 
-public class AdminActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class Dashboard extends AppCompatActivity {
+    ListView lvProducts;
+    ArrayList<Product> productArrayList;
+    DatabaseManager databaseManager;
     MyApplication myApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_dashboard);
         myApplication = (MyApplication) getApplication();
+        databaseManager = DatabaseManager.getDatabaseManager(this);
+        productArrayList = databaseManager.getEnteredProducts();
+        //Toast.makeText(this,String.valueOf(productArrayList),Toast.LENGTH_LONG).show();
+        bindData();
+
+        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Product product = productArrayList.get(i);
+                String name = product.getProduct();
+                Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
+
+    private void bindData() {
+        lvProducts = findViewById(R.id.listViewProduct);
+        ProductAdapter productAdapter = new ProductAdapter(this,R.layout.product_data,productArrayList);
+        lvProducts.setAdapter(productAdapter);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,8 +62,16 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.nav_dashboard){
+            Intent i = new Intent(getApplicationContext(), Dashboard.class);
+            startActivity(i);
+        }
+        if (id == R.id.nav_enterProduct){
+            Intent i = new Intent(getApplicationContext(), EnterProductActivity.class);
+            startActivity(i);
+        }
         if (id == R.id.nav_logout) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminActivity.this);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);
             // Setting Dialog Title
             alertDialog.setTitle("Confirm Logout...");
 
@@ -42,7 +81,7 @@ public class AdminActivity extends AppCompatActivity {
             alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
 
-                    final ProgressDialog progressDialog = new ProgressDialog(AdminActivity.this);
+                    final ProgressDialog progressDialog = new ProgressDialog(Dashboard.this);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setMessage("Logging Out...");
                     progressDialog.show();
@@ -74,4 +113,5 @@ public class AdminActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
