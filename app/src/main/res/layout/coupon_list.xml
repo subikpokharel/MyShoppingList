@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"  android:paddingRight="5dp"
+    android:layout_margin="10dp"
+    android:weightSum="2">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:text="@string/list_coupon_action"
+        android:textSize="20sp"
+        android:id="@+id/couponId"
+        android:textColor="@color/colorPrimary"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:src="@android:drawable/ic_menu_delete"
+        android:id="@+id/couponDelete"/>
+</LinearLayout>

@@ -9,7 +9,7 @@
     android:paddingTop="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context="com.example.subik.myshoppinglist.CouponActivity">
+    tools:context="com.example.subik.myshoppinglist.EnterCouponActivity">
 
 
     <!--  Discount Label -->

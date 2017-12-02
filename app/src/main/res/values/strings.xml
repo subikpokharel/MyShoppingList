@@ -33,6 +33,8 @@
     <string name="coupon_products">Product List: </string>
     <string name="coupon_button">Enter Coupon</string>
 
+    <string name="list_coupon_Number">Coupon Number</string>
+    <string name="list_coupon_action">Action</string>
 
     <string-array name="sports_array">
         <item>Shuttle Badminton</item>

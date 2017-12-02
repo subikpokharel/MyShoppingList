@@ -9,18 +9,12 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,7 +103,13 @@ public class Dashboard extends AppCompatActivity {
             startActivity(i);
         }
         if (id == R.id.nav_enterCoupon){
-            Intent i = new Intent(getApplicationContext(), CouponActivity.class);
+            Intent i = new Intent(getApplicationContext(), EnterCouponActivity.class);
+            startActivity(i);
+        }
+
+
+        if (id == R.id.nav_listCoupon){
+            Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
             startActivity(i);
         }
         if (id == R.id.nav_logout) {

@@ -43,24 +43,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String CREATE_CUSTOMER = "CREATE TABLE "+
             TABLE_CUSTOMERS+" ( "+
-            COLUMN_ID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             COLUMN_NAME+" TEXT NOT NULL, "+
             COLUMN_USERNAME+" TEXT UNIQUE NOT NULL );";
 
     private static final String CREATE_PRODUCT = "CREATE TABLE "+
             TABLE_PRODUCT+" ( "+
-            COLUMN_PID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_PID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             COLUMN_PNAME+" TEXT UNIQUE NOT NULL, "+
             COLUMN_PPRICE+" REAL NOT NULL );";
 
     private static final String CREATE_COUPONS = "CREATE TABLE "+
             TABLE_COUPONS+" ( "+
-            COLUMN_CID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_CID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             COLUMN_DISCOUNT+" REAL NOT NULL );";
 
     private static final String CREATE_COUPON_PRODUCTS = " CREATE TABLE "+
             TABLE_COUPON_PRODUCTS+" ( "+
-            COLUMN_CPID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_CPID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             COLUMN_COUPONID+" INTEGER NOT NULL, "+
             COLUMN_PRODUCTID+" INTEGER  NOT NULL, "+
             " FOREIGN KEY ( "+COLUMN_COUPONID+" ) REFERENCES "+TABLE_COUPONS+" ( "+COLUMN_CID+" ) "+

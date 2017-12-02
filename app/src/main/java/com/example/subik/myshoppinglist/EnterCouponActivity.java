@@ -3,9 +3,7 @@ package com.example.subik.myshoppinglist;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,7 +16,7 @@ import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
 
-public class CouponActivity extends AppCompatActivity {
+public class EnterCouponActivity extends AppCompatActivity {
 
     EditText editDiscount;
     ListView listProducts;
@@ -27,7 +25,7 @@ public class CouponActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coupon);
+        setContentView(R.layout.activity_enter_coupon);
         databaseManager = DatabaseManager.getDatabaseManager(this);
         init();
         listArrayProducts = databaseManager.getEnteredProducts();
@@ -68,7 +66,7 @@ public class CouponActivity extends AppCompatActivity {
             if (result != -1){
                 databaseManager.insertCouponProducts(result,ids);
             }
-            Intent intent = new Intent(this, CouponActivity.class);
+            Intent intent = new Intent(this, EnterCouponActivity.class);
             Toast.makeText(getApplicationContext(),"Coupon Successfully Added", Toast.LENGTH_LONG).show();
             startActivity(intent);
             finish();
