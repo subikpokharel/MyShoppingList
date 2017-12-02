@@ -49,7 +49,7 @@ public class CouponEnterAdapter extends ArrayAdapter<Product> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         Product product = getItem(position);
-        CouponEnterAdapter.ViewHolder mViewHolder;
+        final CouponEnterAdapter.ViewHolder mViewHolder;
 
         if (convertView == null) {
             convertView= mlayoutInflater.inflate(resource, parent, false);
@@ -60,9 +60,20 @@ public class CouponEnterAdapter extends ArrayAdapter<Product> {
             mViewHolder = (CouponEnterAdapter.ViewHolder) convertView.getTag();
         }
         mViewHolder.productName.setText(product.getProduct());
-        mViewHolder.checkBox.setId(product.getId());
+        //mViewHolder.checkBox.setId(product.getId());
         //Toast.makeText(getContext(), String.valueOf(mViewHolder.checkBox.getId()),Toast.LENGTH_LONG).show();
 
+        mViewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ((mViewHolder.checkBox).isChecked()){
+                    //Toast.makeText(getContext(),"Hello" ,Toast.LENGTH_LONG).show();
+                    mViewHolder.productName.setEnabled(true);
+                }else{
+                    mViewHolder.productName.setEnabled(false);
+                }
+            }
+        });
         return convertView;
     }
 
@@ -74,6 +85,7 @@ public class CouponEnterAdapter extends ArrayAdapter<Product> {
         public ViewHolder(View view){
             productName = view.findViewById(R.id.productName);
             checkBox = view.findViewById(R.id.chkCouponProduct);
+            productName.setEnabled(false);
 
         }
     }

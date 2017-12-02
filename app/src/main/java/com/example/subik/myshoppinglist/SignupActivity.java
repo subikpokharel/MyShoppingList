@@ -137,7 +137,5 @@ public class SignupActivity extends AppCompatActivity {
         ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
         textLogin.setText( ssb, TextView.BufferType.SPANNABLE );
-
-
     }
 }

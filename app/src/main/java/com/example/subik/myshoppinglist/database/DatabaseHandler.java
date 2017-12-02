@@ -30,23 +30,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COLUMN_PNAME = "name";
     public static final String COLUMN_PPRICE = "price";
 
+    //Table components for Coupons
+    public static final String TABLE_COUPONS = "tbl_coupon";
+    public static final String COLUMN_CID = "id";
+    public static final String COLUMN_DISCOUNT = "discount";
+
+    //Table components for Coupons
+    public static final String TABLE_COUPON_PRODUCTS = "tbl_coupon_products";
+    public static final String COLUMN_CPID = "id";
+    public static final String COLUMN_COUPONID = "coupon_id";
+    public static final String COLUMN_PRODUCTID = "product_id";
+
     private static final String CREATE_CUSTOMER = "CREATE TABLE "+
             TABLE_CUSTOMERS+" ( "+
-            COLUMN_ID+" integer primary key not null, "+
-            COLUMN_NAME+" text not null, "+
-            COLUMN_USERNAME+" text unique not null );";
+            COLUMN_ID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_NAME+" TEXT NOT NULL, "+
+            COLUMN_USERNAME+" TEXT UNIQUE NOT NULL );";
 
     private static final String CREATE_PRODUCT = "CREATE TABLE "+
             TABLE_PRODUCT+" ( "+
-            COLUMN_PID+" integer primary key not null, "+
-            COLUMN_PNAME+" text unique not null, "+
-            COLUMN_PPRICE+" Real not null );";
+            COLUMN_PID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_PNAME+" TEXT UNIQUE NOT NULL, "+
+            COLUMN_PPRICE+" REAL NOT NULL );";
+
+    private static final String CREATE_COUPONS = "CREATE TABLE "+
+            TABLE_COUPONS+" ( "+
+            COLUMN_CID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_DISCOUNT+" REAL NOT NULL );";
+
+    private static final String CREATE_COUPON_PRODUCTS = " CREATE TABLE "+
+            TABLE_COUPON_PRODUCTS+" ( "+
+            COLUMN_CPID+" INTEGER PRIMARY KEY NOT NULL, "+
+            COLUMN_COUPONID+" INTEGER NOT NULL, "+
+            COLUMN_PRODUCTID+" INTEGER  NOT NULL, "+
+            " FOREIGN KEY ( "+COLUMN_COUPONID+" ) REFERENCES "+TABLE_COUPONS+" ( "+COLUMN_CID+" ) "+
+            " ON DELETE CASCADE, "+
+            " FOREIGN KEY ( "+COLUMN_PRODUCTID+" ) REFERENCES "+TABLE_PRODUCT+" ( "+COLUMN_PID+" ) "+
+            " ON DELETE CASCADE );";
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CUSTOMER);
         db.execSQL(CREATE_PRODUCT);
+        db.execSQL(CREATE_COUPONS);
+        db.execSQL(CREATE_COUPON_PRODUCTS);
     }
 
     @Override
@@ -54,6 +82,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
+            db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPONS);
+            db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPON_PRODUCTS);
             onCreate(db);
         }
     }

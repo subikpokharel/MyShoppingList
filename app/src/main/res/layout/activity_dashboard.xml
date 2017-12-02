@@ -3,43 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="20dp"
     tools:context="com.example.subik.myshoppinglist.Dashboard">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/buttonUpdate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:onClick="updatePrice"
-            android:text="Update Price" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="10dp"
+        android:paddingBottom="5dp"
         android:weightSum="9">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
+            android:textAllCaps="true"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_weight="1"
             android:textColor="@color/colorAccent"
-            android:text="Sl.No."/>
+            android:text="@string/dashboard_check"/>
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Name"
+            android:text="@string/dashboard_name"
             android:gravity="center"
             android:textAllCaps="true"
             android:textSize="15sp"
@@ -52,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="Price"
+            android:text="@string/dashboard_price"
             android:textAllCaps="true"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -65,10 +52,22 @@
     <ListView
         android:id="@+id/listViewProduct"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="6"/>
 
-
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:onClick="updatePrice"
+            android:text="@string/dashboard_btn" />
+    </LinearLayout>
 
 
 </LinearLayout>

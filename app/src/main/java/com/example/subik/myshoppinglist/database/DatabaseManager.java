@@ -2,8 +2,10 @@ package com.example.subik.myshoppinglist.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.subik.myshoppinglist.parsing.Customer;
 import com.example.subik.myshoppinglist.parsing.Product;
@@ -69,7 +71,7 @@ public class DatabaseManager {
 
     public long enterProduct(Product product){
         ContentValues mValues = new ContentValues();
-        query = "select * from tbl_product";
+        query = "select * from "+DatabaseHandler.TABLE_PRODUCT;
         cursor = database.rawQuery(query, null);
         int count = cursor.getCount()+1;
         mValues.put(DatabaseHandler.COLUMN_PID, count);
@@ -94,8 +96,60 @@ public class DatabaseManager {
                 items_products.add(product);
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return  items_products;
     }
 
+    public void updatePrice(String name, String price){
+        ContentValues mContentValues = new ContentValues();
+        mContentValues.put(DatabaseHandler.COLUMN_PPRICE,price);
+        mContentValues.put(DatabaseHandler.COLUMN_PNAME,name);
+       db.update(DatabaseHandler.TABLE_PRODUCT, mContentValues,DatabaseHandler.COLUMN_PNAME + " = '" + name + "'", null);
+    }
+
+
+    public Integer getProductId(String name){
+        query = "Select "+DatabaseHandler.COLUMN_PID+" From "+DatabaseHandler.TABLE_PRODUCT+" Where "+
+                DatabaseHandler.COLUMN_PNAME+" = ?";
+        cursor = database.rawQuery(query, new String[]{name});
+        Integer id = 0;
+        if (cursor.moveToFirst()) {
+           String rst = cursor.getString(0);
+            id = Integer.parseInt(rst);
+        }
+        cursor.close();
+        return id;
+    }
+
+
+    public long insertCoupons(float discount){
+        ContentValues mValues = new ContentValues();
+        query = "select * from "+DatabaseHandler.TABLE_COUPONS;
+        cursor = database.rawQuery(query, null);
+        int count = cursor.getCount()+1;
+        mValues.put(DatabaseHandler.COLUMN_CID, count);
+        mValues.put(DatabaseHandler.COLUMN_DISCOUNT, discount);
+        long rowInserted = db.insert(DatabaseHandler.TABLE_COUPONS, null, mValues);
+        cursor.close();
+        //Log.e("Result :", String.valueOf(rowInserted));
+        return rowInserted;
+    }
+
+
+    public void insertCouponProducts(long id, ArrayList<Integer> ids){
+        ContentValues mValues = new ContentValues();
+        for (int i = 0; i<ids.size(); i++){
+            query = "select * from "+DatabaseHandler.TABLE_COUPON_PRODUCTS;
+            cursor = database.rawQuery(query, null);
+            int count = cursor.getCount()+1;
+            mValues.put(DatabaseHandler.COLUMN_CPID, count);
+            mValues.put(DatabaseHandler.COLUMN_COUPONID, id);
+            mValues.put(DatabaseHandler.COLUMN_PRODUCTID, ids.get(i));
+            long rowInserted = db.insert(DatabaseHandler.TABLE_COUPON_PRODUCTS, null, mValues);
+            //Log.e("Data :", String.valueOf(rowInserted));
+            cursor.close();
+        }
+
+    }
 
 }

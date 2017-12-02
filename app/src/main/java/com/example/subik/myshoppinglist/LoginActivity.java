@@ -210,16 +210,16 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.customertxt:
-                    textCustomer.setTextColor(getResources().getColor(R.color.black));
-                    textAdmin.setTextColor(getResources().getColor(R.color.colorIcons));
+                    textCustomer.setTextColor(getResources().getColor(R.color.colorAccent));
+                    textAdmin.setTextColor(getResources().getColor(R.color.dividerColor));
                     textCustomer.setTypeface(Typeface.DEFAULT_BOLD);
                     textAdmin.setTypeface(Typeface.DEFAULT);
                     customerLayout.setVisibility(View.VISIBLE);
                     adminLayout.setVisibility(View.GONE);
                     break;
                 case R.id.admintxt:
-                    textAdmin.setTextColor(getResources().getColor(R.color.black));
-                    textCustomer.setTextColor(getResources().getColor(R.color.colorIcons));
+                    textAdmin.setTextColor(getResources().getColor(R.color.colorAccent));
+                    textCustomer.setTextColor(getResources().getColor(R.color.dividerColor));
                     textAdmin.setTypeface(Typeface.DEFAULT_BOLD);
                     textCustomer.setTypeface(Typeface.DEFAULT);
                     adminLayout.setVisibility(View.VISIBLE);

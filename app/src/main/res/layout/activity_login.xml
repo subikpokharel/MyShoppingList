@@ -30,7 +30,7 @@
                 android:textSize="15sp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/colorAccent"
                 />
 
             <TextView

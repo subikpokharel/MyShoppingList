@@ -95,4 +95,6 @@ public class EnterProductActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

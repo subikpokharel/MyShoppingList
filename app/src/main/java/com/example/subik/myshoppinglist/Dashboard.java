@@ -6,13 +6,23 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.URLSpan;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.subik.myshoppinglist.adapter.ProductAdapter;
@@ -34,9 +44,7 @@ public class Dashboard extends AppCompatActivity {
         myApplication = (MyApplication) getApplication();
         databaseManager = DatabaseManager.getDatabaseManager(this);
         productArrayList = databaseManager.getEnteredProducts();
-        //Toast.makeText(this,String.valueOf(productArrayList),Toast.LENGTH_LONG).show();
         bindData();
-
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -46,34 +54,42 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void bindData() {
         lvProducts = findViewById(R.id.listViewProduct);
         ProductAdapter productAdapter = new ProductAdapter(this,R.layout.product_data,productArrayList);
         lvProducts.setAdapter(productAdapter);
-    }
-
-    public void updatePrice(View view){
-
-        //ListAdapter productAdapter = lvProducts.getAdapter();
-       /* ProductAdapter productAdapter = new ProductAdapter(this,R.layout.product_data,productArrayList);
-        lvProducts.setAdapter(productAdapter);*/
-
-       //ArrayList<Product> list =
-
-
-        //Toast.makeText(this,String.valueOf(productAdapter.getItem(4)),Toast.LENGTH_LONG).show();
-        //databaseManager
-        //Toast.makeText(this,String.valueOf(productAdapter.getCount()),Toast.LENGTH_SHORT);
-       /* for(int i =productAdapter.getCount(); i>0; i--){
-            Product product = new Product();
-            int id = product.getId();
-            String str = product.getProduct();
-            //Toast.makeText(this,String.valueOf(productAdapter.getItem(i)),Toast.LENGTH_SHORT).show();
-            Toast.makeText(this,String.valueOf(id)+" "+str,Toast.LENGTH_SHORT).show();
+        /*for (int i =0; i<lvProducts.getChildCount(); i++){
+            TextView hyper = lvProducts.getChildAt(i).findViewById(R.id.tvName);
+            Dashboard.makeTextViewHyperlink(hyper);
         }*/
+
+        //Dashboard.makeTextViewHyperlink(hyper);
+
     }
+
+
+    public void updatePrice(View view) {
+        CheckBox checkBox;
+
+        ListView listView = findViewById(R.id.listViewProduct);
+        for (int i = 0; i < listView.getChildCount(); i++) {
+            checkBox = listView.getChildAt(i).findViewById(R.id.chkBoxDashboad);
+            if (checkBox.isChecked()){
+                TextView product_name = (TextView) listView.getChildAt(i).findViewById(R.id.tvName);
+                EditText product_price = (EditText) listView.getChildAt(i).findViewById(R.id.etPrice);
+                databaseManager.updatePrice(product_name.getText().toString(),product_price.getText().toString());
+                //Log.e("Updated: ", product_name.getText().toString());
+            }
+
+        }
+        Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,4 +156,13 @@ public class Dashboard extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static void makeTextViewHyperlink(TextView textView) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder( );
+        ssb.append( textView.getText( ) );
+        ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+        textView.setText( ssb, TextView.BufferType.SPANNABLE );
+
+
+    }
 }

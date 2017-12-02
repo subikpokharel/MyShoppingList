@@ -24,8 +24,13 @@
     <string name="product_price">Product Price</string>
     <string name="product_button">Enter Product</string>
 
+    <string name="dashboard_name">Product Name</string>
+    <string name="dashboard_price">Price</string>
+    <string name="dashboard_check">Check</string>
+    <string name="dashboard_btn">Update Price</string>
+
     <string name="coupon_discount">Discount</string>
-    <string name="coupon_products">Product List</string>
+    <string name="coupon_products">Product List: </string>
     <string name="coupon_button">Enter Coupon</string>
 
 

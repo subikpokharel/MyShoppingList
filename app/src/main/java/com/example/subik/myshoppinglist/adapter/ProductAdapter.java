@@ -9,12 +9,14 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import com.example.subik.myshoppinglist.R;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+
+import static com.example.subik.myshoppinglist.Dashboard.makeTextViewHyperlink;
 
 /**
  * Created by subik on 11/30/17.
@@ -55,7 +59,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         Product product = getItem(position);
-        ViewHolder mViewHolder;
+        final ViewHolder mViewHolder;
 
         if (convertView == null) {
             convertView= mlayoutInflater.inflate(resource, parent, false);
@@ -65,11 +69,18 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
+
         mViewHolder.editPrice.setText(product.getPrice());
         mViewHolder.textName.setText(product.getProduct());
-        mViewHolder.count.setText(String.valueOf(position+1));
         //mViewHolder.checkBox.setId(product.getId());
-        //Toast.makeText(getContext(), String.valueOf(mViewHolder.checkBox.getId()),Toast.LENGTH_LONG).show();
+
+
+        //Linkify.addLinks(mViewHolder.textName,Linkify.ALL);
+        /*View itemView = super.getView(position,convertView,parent);
+        TextView textView = itemView.findViewById(R.id.tvName);
+        Dashboard.makeTextViewHyperlink(textView);*/
+
+
         mViewHolder.textName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,14 +90,20 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             }
         });
 
-       /* mViewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+       mViewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Product product = list.get(position);
-                int id = product.getId();
-                Toast.makeText(getContext(),String.valueOf(id)+" " +String.valueOf(product.getPrice()),Toast.LENGTH_LONG).show();
+                if ((mViewHolder.checkBox).isChecked()){
+                    //Toast.makeText(getContext(),"Hello" ,Toast.LENGTH_LONG).show();
+                    mViewHolder.editPrice.setEnabled(true);
+                }else{
+                    mViewHolder.editPrice.setEnabled(false);
+                }
             }
-        });*/
+        });
+
+
+       //Dashboard.make
         /*SpannableStringBuilder ssb = new SpannableStringBuilder( );
         ssb.append( mViewHolder.textName.getText( ) );
         ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
@@ -94,20 +111,25 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         mViewHolder.textName.setText( ssb, TextView.BufferType.SPANNABLE );
 
         mViewHolder.textName.setText(product.getProduct());*/
+
         return convertView;
     }
 
 
     private static class ViewHolder{
-        public TextView textName, count;
+        public TextView textName;
         public EditText editPrice;//, textid;
-        //public CheckBox checkBox;
+        public CheckBox checkBox;
         //public TextView textPrice;
 
         public ViewHolder(View view){
             textName = view.findViewById(R.id.tvName);
             editPrice = view.findViewById(R.id.etPrice);
-            count = view.findViewById(R.id.slNo);
+            checkBox = view.findViewById(R.id.chkBoxDashboad);
+            editPrice.setEnabled(false);
+
+
+            //checkBox.setOnCheckedChangeListener();
             //checkBox = view.findViewById(R.id.checkbox);
             //mcontext.makeTextViewHyperlink
             //mcontext.getContext()
