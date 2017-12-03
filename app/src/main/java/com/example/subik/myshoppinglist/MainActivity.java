@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBar.setText("Please wait while we connect you...");
+                progressBar.setText(R.string.app_open_msg);
                 progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale));
             }
         },500);

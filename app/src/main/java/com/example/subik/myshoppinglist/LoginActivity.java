@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             myApplication.saveToken("Admin_Name", "admin");
                             startActivity(intent);
                             editPassword.setText("");
+                            finish();
                             progressDialog.dismiss();
                         }else{
                             Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
@@ -135,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         myApplication.saveToken("Customer_Username", username);
         myApplication.saveToken("Customer_ID", id);
         startActivity(intent);
+        finish();
     }
 
     private void onLoginFailed() {

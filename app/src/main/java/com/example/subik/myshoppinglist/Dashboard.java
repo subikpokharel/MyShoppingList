@@ -67,7 +67,7 @@ public class Dashboard extends AppCompatActivity {
 
     public void updatePrice(View view) {
         CheckBox checkBox;
-
+        int dataUpdated = 0;
         ListView listView = findViewById(R.id.listViewProduct);
         for (int i = 0; i < listView.getChildCount(); i++) {
             checkBox = listView.getChildAt(i).findViewById(R.id.chkBoxDashboad);
@@ -76,12 +76,15 @@ public class Dashboard extends AppCompatActivity {
                 EditText product_price = (EditText) listView.getChildAt(i).findViewById(R.id.etPrice);
                 databaseManager.updatePrice(product_name.getText().toString(),product_price.getText().toString());
                 //Log.e("Updated: ", product_name.getText().toString());
+                dataUpdated++;
             }
 
         }
         Intent intent = new Intent(getApplicationContext(), Dashboard.class);
         startActivity(intent);
         finish();
+        if (dataUpdated > 0)
+            Toast.makeText(getApplicationContext(),"Data Successfully Updated...",Toast.LENGTH_LONG).show();
     }
 
 
@@ -97,20 +100,24 @@ public class Dashboard extends AppCompatActivity {
         if (id == R.id.nav_dashboard){
             Intent i = new Intent(getApplicationContext(), Dashboard.class);
             startActivity(i);
+            finish();
         }
         if (id == R.id.nav_enterProduct){
             Intent i = new Intent(getApplicationContext(), EnterProductActivity.class);
             startActivity(i);
+            finish();
         }
         if (id == R.id.nav_enterCoupon){
             Intent i = new Intent(getApplicationContext(), EnterCouponActivity.class);
             startActivity(i);
+            finish();
         }
 
 
         if (id == R.id.nav_listCoupon){
             Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
             startActivity(i);
+            finish();
         }
         if (id == R.id.nav_logout) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);

@@ -12,6 +12,8 @@
     <string name="navigation_customer">Customer Login</string>
     <string name="navigation_admin">Admin Login</string>
 
+    <string name="app_open_msg">Please wait while we connect you&#8230;</string>
+
 
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_enter_product">Enter Product</string>
