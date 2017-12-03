@@ -33,6 +33,7 @@
         <activity android:name=".EnterProductActivity" />
         <activity android:name=".EnterCouponActivity" />
         <activity android:name=".ListCouponActivity" />
+        <activity android:name=".ViewCouponActivity"></activity>
     </application>
 
 </manifest>

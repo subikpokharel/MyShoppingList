@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.subik.myshoppinglist.R;
 
 import java.util.ArrayList;
@@ -58,18 +57,27 @@ public class ListCouponsAdapter extends ArrayAdapter<Integer> {
 
         mViewHolder.textId.setText(id.toString());
 
+        dataTransferInterface.makeHyperlink(mViewHolder.textId);
         mViewHolder.imageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int pos = list.get(position);
+                final int pos = list.get(position);
                 dataTransferInterface.sendID(pos);
             }
         });
 
-        
+        mViewHolder.textId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = list.get(position);
+                dataTransferInterface.viewCoupon(pos);
+                //Toast.makeText(getContext(),"Clicked: "+String.valueOf(pos),Toast.LENGTH_LONG).show();
+            }
+        });
 
         return convertView;
     }
+
 
     public class ViewHolder {
         TextView textId;
@@ -83,5 +91,7 @@ public class ListCouponsAdapter extends ArrayAdapter<Integer> {
 
     public interface DataTransferInterface{
        void sendID(int id);
+       void viewCoupon(int id);
+       void makeHyperlink(TextView textView);
     }
 }

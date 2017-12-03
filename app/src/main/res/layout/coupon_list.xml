@@ -14,8 +14,7 @@
         android:textAlignment="center"
         android:text="@string/list_coupon_action"
         android:textSize="20sp"
-        android:id="@+id/couponId"
-        android:textColor="@color/colorPrimary"/>
+        android:id="@+id/couponId"/>
 
     <ImageView
         android:layout_width="wrap_content"

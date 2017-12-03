@@ -170,7 +170,48 @@ public class DatabaseManager {
     public void  deleteCoupon(Integer id){
         //db.delete(TABLE_BUS, KEY_BUS_NUM+"="+bus_num , null);
         db.delete(DatabaseHandler.TABLE_COUPONS,DatabaseHandler.COLUMN_CID+" = "+id ,null);
-        Log.e("Received ID: ", String.valueOf(id));
+        //Log.e("Received ID: ", String.valueOf(id));
     }
 
+    public float selectDiscount(Integer id){
+        query = "SELECT "+DatabaseHandler.COLUMN_DISCOUNT+" FROM "+DatabaseHandler.TABLE_COUPONS+
+                " WHERE "+DatabaseHandler.COLUMN_CID+" = ?";
+        cursor =database.rawQuery(query, new String[]{id.toString()});
+        float discount = 0;
+        if (cursor.moveToFirst()){
+            do {
+                discount = (cursor.getFloat(0));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  discount;
+    }
+//ArrayList<Product>
+    public  ArrayList<Product>   selectCouponProductById(Integer id){
+
+        ArrayList<Product> items_products = new ArrayList<Product>();
+
+        query = " SELECT p."+DatabaseHandler.COLUMN_PID+", p."+DatabaseHandler.COLUMN_PNAME+", p."+DatabaseHandler.COLUMN_PPRICE+" FROM "+
+                " "+DatabaseHandler.TABLE_PRODUCT+" p JOIN "+DatabaseHandler.TABLE_COUPON_PRODUCTS+" cp "+
+                " ON cp."+DatabaseHandler.COLUMN_PRODUCTID+" = p."+DatabaseHandler.COLUMN_PID+" WHERE cp."+DatabaseHandler.COLUMN_COUPONID+
+                " = ? ; ";
+        //SELECT p.name, p.price FROM  TABLE tbl_product p JOIN tbl_coupon_products cp  ON cp.product_id = p.id WHERE cp.coupon_id = ?
+
+        cursor =database.rawQuery(query, new String[]{id.toString()});
+        //int i = 0;
+        if (cursor.moveToFirst()){
+            do {
+                Product product = new Product();
+                product.setId(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PID))));
+                product.setProduct(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PNAME)));
+                product.setPrice(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PPRICE)));
+                items_products.add(product);
+                //Log.e("TOTAL DATA: ", String.valueOf(product.getProduct()));
+               // i++;
+            }while (cursor.moveToNext());
+        }
+        //Log.e("TOTAL DATA: ", String.valueOf(i));
+        cursor.close();
+        return  items_products;
+    }
 }

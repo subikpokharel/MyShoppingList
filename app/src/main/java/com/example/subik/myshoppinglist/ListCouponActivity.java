@@ -1,9 +1,16 @@
 package com.example.subik.myshoppinglist;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.URLSpan;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.subik.myshoppinglist.adapter.ListCouponsAdapter;
@@ -36,11 +43,27 @@ public class ListCouponActivity extends AppCompatActivity implements ListCoupons
 
 
    @Override
-    public void sendID(int id) {
-       //databaseManager.deleteCoupon(id);
-       Intent intent = new Intent(getApplicationContext(), ListCouponActivity.class);
-       startActivity(intent);
+    public void sendID(final int id) {
+       databaseManager.deleteCoupon(id);
+       Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
+       startActivity(i);
        finish();
-       Toast.makeText(getApplicationContext(),"Hello: "+id,Toast.LENGTH_LONG).show();
+       //Toast.makeText(getApplicationContext(),"Hello: "+id,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void viewCoupon(int id) {
+        Intent intent = new Intent(getApplicationContext(), ViewCouponActivity.class);
+        intent.putExtra("Coupon Id",String.valueOf(id));
+        startActivity(intent);
+    }
+
+    @Override
+    public void makeHyperlink(TextView textView) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder( );
+        ssb.append( textView.getText( ) );
+        ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+        textView.setText( ssb, TextView.BufferType.SPANNABLE );
     }
 }
