@@ -48,32 +48,6 @@ public class DatabaseManager {
         database=new DatabaseHandler(context).getReadableDatabase();
     }
 
-    public long signup(Customer customer) {
-        ContentValues mValues = new ContentValues();
-        /*query = "select * from tbl_customer";
-        cursor = database.rawQuery(query, null);
-        int count = cursor.getCount()+1;
-        mValues.put(DatabaseHandler.COLUMN_ID, count);*/
-        mValues.put(DatabaseHandler.COLUMN_NAME, customer.getName());
-        mValues.put(DatabaseHandler.COLUMN_USERNAME, customer.getUsername());
-        rowInserted = db.insert(DatabaseHandler.TABLE_CUSTOMERS,null,mValues);
-        //cursor.close();
-        return rowInserted;
-    }
-
-    public String[] login(String username){
-        query = "select name,id from "+DatabaseHandler.TABLE_CUSTOMERS+" where "+DatabaseHandler.COLUMN_USERNAME+" = ?";
-        cursor = database.rawQuery(query,  new String[] { username });
-        String [] result = new String[2];
-        result [0] = "Not Found";
-        if (cursor.moveToFirst()) {
-            result [0] = cursor.getString(0);
-            result [1] = cursor.getString(1);
-        }
-        cursor.close();
-        return result;
-    }
-
     public long enterProduct(Product product){
         ContentValues mValues = new ContentValues();
        /* query = "select * from "+DatabaseHandler.TABLE_PRODUCT;
@@ -272,10 +246,7 @@ public class DatabaseManager {
         return product;
     }
 
-    /*
 
-
-     */
 
 
     /*

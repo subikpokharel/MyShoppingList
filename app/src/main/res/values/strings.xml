@@ -16,6 +16,7 @@
 
 
     <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_list_product">List Products</string>
     <string name="menu_enter_product">Enter Product</string>
     <string name="menu_enter_coupon">Enter Coupon</string>
     <string name="menu_list_coupon">List Coupons</string>

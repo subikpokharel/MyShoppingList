@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/nav_dashboard"
-        android:title="@string/menu_dashboard"
-        app:showAsAction="never"
-        android:orderInCategory="1"/>
 
     <item android:id="@+id/nav_enterProduct"
         android:title="@string/menu_enter_product"
@@ -16,26 +12,26 @@
         app:showAsAction="never"
         android:orderInCategory="3"/>
 
+    <item android:id="@+id/nav_listProduct"
+        android:title="@string/menu_list_product"
+        app:showAsAction="never"
+        android:orderInCategory="4"/>
+
     <item android:id="@+id/nav_listCoupon"
         android:title="@string/menu_list_coupon"
         app:showAsAction="never"
-        android:orderInCategory="4"/>
+        android:orderInCategory="5"/>
 
     <item android:id="@+id/nav_largest_discount"
         android:title="@string/menu_largest_discount"
         app:showAsAction="never"
-        android:orderInCategory="5"/>
+        android:orderInCategory="6"/>
 
 
     <item android:id="@+id/nav_best_discount"
         android:title="@string/menu_best_discount"
         app:showAsAction="never"
-        android:orderInCategory="6"/>
-
-    <item android:id="@+id/nav_logout"
-        android:title="@string/logout"
-        app:showAsAction="never"
-        android:orderInCategory="100"/>
+        android:orderInCategory="7"/>
 </menu>
 
 

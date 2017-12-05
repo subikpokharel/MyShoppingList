@@ -97,7 +97,7 @@ public class EnterProductActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, Dashboard.class);
+        Intent intent = new Intent(this, ListProductActivity.class);
         startActivity(intent);
         finish();
     }
@@ -112,74 +112,31 @@ public class EnterProductActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_dashboard){
-            Intent i = new Intent(getApplicationContext(), Dashboard.class);
+
+        if (id == R.id.nav_listProduct){
+            Intent i = new Intent(getApplicationContext(), ListProductActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.nav_enterProduct){
             Intent i = new Intent(getApplicationContext(), EnterProductActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.nav_enterCoupon){
             Intent i = new Intent(getApplicationContext(), EnterCouponActivity.class);
             startActivity(i);
-            finish();
         }
-
 
         if (id == R.id.nav_listCoupon){
             Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
             startActivity(i);
-            finish();
         }
-
         if (id == R.id.nav_largest_discount){
             Intent i = new Intent(getApplicationContext(), LargestDiscountActivity.class);
             startActivity(i);
         }
-
-        if (id == R.id.nav_logout) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getApplicationContext());
-            // Setting Dialog Title
-            alertDialog.setTitle("Confirm Logout...");
-
-            // Setting Dialog Message
-            alertDialog.setMessage("Are you sure you want to Logout?");
-
-            alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                    final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setMessage("Logging Out...");
-                    progressDialog.show();
-                    new android.os.Handler().postDelayed(new Runnable() {
-                        public void run() {
-
-                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                            myApplication.removeToken("Admin_Name");
-                            startActivity(i);
-                            finish();
-                            progressDialog.dismiss();
-                        }
-                    }, 1000);
-
-                }
-            });
-
-            // Setting Negative "NO" Btn
-            alertDialog.setNegativeButton("Discard",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-            // Showing Alert Dialog
-            alertDialog.show();
-            return true;
+        if (id == R.id.nav_best_discount){
+            Intent i = new Intent(getApplicationContext(), BestDiscountActivity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }

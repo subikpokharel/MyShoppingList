@@ -1,9 +1,6 @@
 package com.example.subik.myshoppinglist;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
@@ -26,7 +23,7 @@ import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
 
-public class Dashboard extends AppCompatActivity {
+public class ListProductActivity extends AppCompatActivity {
     ListView lvProducts;
     ArrayList<Product> productArrayList;
     DatabaseManager databaseManager;
@@ -34,7 +31,7 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_list_product);
         myApplication = (MyApplication) getApplication();
         databaseManager = DatabaseManager.getDatabaseManager(this);
         productArrayList = databaseManager.getEnteredProducts();
@@ -57,10 +54,10 @@ public class Dashboard extends AppCompatActivity {
         lvProducts.setAdapter(productAdapter);
         /*for (int i =0; i<lvProducts.getChildCount(); i++){
             TextView hyper = lvProducts.getChildAt(i).findViewById(R.id.tvName);
-            Dashboard.makeTextViewHyperlink(hyper);
+            ListProductActivity.makeTextViewHyperlink(hyper);
         }*/
 
-        //Dashboard.makeTextViewHyperlink(hyper);
+        //ListProductActivity.makeTextViewHyperlink(hyper);
 
     }
 
@@ -80,7 +77,7 @@ public class Dashboard extends AppCompatActivity {
             }
 
         }
-        Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+        Intent intent = new Intent(getApplicationContext(), ListProductActivity.class);
         startActivity(intent);
         finish();
         if (dataUpdated > 0)
@@ -97,27 +94,22 @@ public class Dashboard extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_dashboard){
-            Intent i = new Intent(getApplicationContext(), Dashboard.class);
+        if (id == R.id.nav_listProduct){
+            Intent i = new Intent(getApplicationContext(), ListProductActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.nav_enterProduct){
             Intent i = new Intent(getApplicationContext(), EnterProductActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.nav_enterCoupon){
             Intent i = new Intent(getApplicationContext(), EnterCouponActivity.class);
             startActivity(i);
-            finish();
         }
-
 
         if (id == R.id.nav_listCoupon){
             Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
             startActivity(i);
-            finish();
         }
         if (id == R.id.nav_largest_discount){
             Intent i = new Intent(getApplicationContext(), LargestDiscountActivity.class);
@@ -128,8 +120,8 @@ public class Dashboard extends AppCompatActivity {
             startActivity(i);
         }
 
-        if (id == R.id.nav_logout) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);
+        /*if (id == R.id.nav_logout) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListProductActivity.this);
             // Setting Dialog Title
             alertDialog.setTitle("Confirm Logout...");
 
@@ -139,7 +131,7 @@ public class Dashboard extends AppCompatActivity {
             alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
 
-                    final ProgressDialog progressDialog = new ProgressDialog(Dashboard.this);
+                    final ProgressDialog progressDialog = new ProgressDialog(ListProductActivity.this);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setMessage("Logging Out...");
                     progressDialog.show();
@@ -168,7 +160,7 @@ public class Dashboard extends AppCompatActivity {
             // Showing Alert Dialog
             alertDialog.show();
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

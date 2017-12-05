@@ -18,11 +18,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //Table components for Customer
-    public static final String TABLE_CUSTOMERS = "tbl_customer";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_USERNAME = "username";
 
     //Table components for Products
     public static final String TABLE_PRODUCT = "tbl_product";
@@ -41,11 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COLUMN_COUPONID = "coupon_id";
     public static final String COLUMN_PRODUCTID = "product_id";
 
-    private static final String CREATE_CUSTOMER = "CREATE TABLE "+
-            TABLE_CUSTOMERS+" ( "+
-            COLUMN_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-            COLUMN_NAME+" TEXT NOT NULL, "+
-            COLUMN_USERNAME+" TEXT UNIQUE NOT NULL );";
+
 
     private static final String CREATE_PRODUCT = "CREATE TABLE "+
             TABLE_PRODUCT+" ( "+
@@ -72,7 +63,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_CUSTOMER);
         db.execSQL(CREATE_PRODUCT);
         db.execSQL(CREATE_COUPONS);
         db.execSQL(CREATE_COUPON_PRODUCTS);
@@ -81,7 +71,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
             db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPONS);
             db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPON_PRODUCTS);
