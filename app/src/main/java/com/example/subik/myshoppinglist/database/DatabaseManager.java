@@ -4,14 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.subik.myshoppinglist.adapter.ListCouponsAdapter;
+import com.example.subik.myshoppinglist.parsing.Coupon;
 import com.example.subik.myshoppinglist.parsing.Customer;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by subik on 11/29/17.
@@ -214,4 +218,83 @@ public class DatabaseManager {
         cursor.close();
         return  items_products;
     }
+
+
+    public ArrayList<Coupon> getAllCoupons(){
+
+        LinkedHashMap<Integer,Coupon> couponMap = new LinkedHashMap<>();
+
+        /*query = " SELECT c."+DatabaseHandler.COLUMN_CID+" , c."+DatabaseHandler.COLUMN_DISCOUNT+
+                ", p."+DatabaseHandler.COLUMN_PID+", p."+DatabaseHandler.COLUMN_PNAME+" FROM "+DatabaseHandler.TABLE_COUPONS+
+                " c JOIN "+DatabaseHandler.TABLE_COUPON_PRODUCTS+" cp ON c."+DatabaseHandler.COLUMN_CID+" = cp."+DatabaseHandler.COLUMN_COUPONID+
+                " JOIN "+DatabaseHandler.TABLE_PRODUCT+" p ON p."+DatabaseHandler.COLUMN_PID+" = cp."+DatabaseHandler.COLUMN_PRODUCTID+
+                " ORDER BY c."+DatabaseHandler.COLUMN_CID+" ASC";*/
+
+        query = " SELECT c.*, p.* FROM "+DatabaseHandler.TABLE_COUPONS+
+                " c JOIN "+DatabaseHandler.TABLE_COUPON_PRODUCTS+" cp ON c."+DatabaseHandler.COLUMN_CID+" = cp."+DatabaseHandler.COLUMN_COUPONID+
+                " JOIN "+DatabaseHandler.TABLE_PRODUCT+" p ON p."+DatabaseHandler.COLUMN_PID+" = cp."+DatabaseHandler.COLUMN_PRODUCTID+
+                " ORDER BY c."+DatabaseHandler.COLUMN_DISCOUNT+" DESC";
+
+        cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                    int coupon_id = cursor.getInt(0);
+                    Coupon coupon = couponMap.get(coupon_id);
+                    if (coupon == null){
+                        coupon = new Coupon(coupon_id, cursor.getDouble(1),new ArrayList<Product>());
+                        couponMap.put(coupon_id,coupon);
+                    }
+                    coupon.addProduct(new Product(cursor.getInt(2), cursor.getString(3),String.valueOf(cursor.getDouble(4))));
+            }while (cursor.moveToNext());
+        }
+        //Log.e("Result: ", DatabaseUtils.dumpCursorToString(cursor));
+        cursor.close();
+       // database.close();
+
+
+        return new ArrayList<>(couponMap.values());
+        //database
+    }
+
+
+    public Product getProductByName(String s) {
+        Product product = new Product();
+        query = "Select * From "+DatabaseHandler.TABLE_PRODUCT+" Where "+
+                DatabaseHandler.COLUMN_PNAME+" = ?";
+        cursor = database.rawQuery(query, new String[]{s});
+        if (cursor.moveToFirst()) {
+            product.setId(Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PID))));
+            product.setProduct(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PNAME)));
+            product.setPrice(cursor.getString(cursor.getColumnIndex(DatabaseHandler.COLUMN_PPRICE)));
+        }
+        cursor.close();
+        return product;
+    }
+
+    /*
+
+
+     */
+
+
+    /*
+
+    //Table components for Products
+    public static final String TABLE_PRODUCT = "tbl_product";
+    public static final String COLUMN_PID = "id";
+    public static final String COLUMN_PNAME = "name";
+    public static final String COLUMN_PPRICE = "price";
+
+    //Table components for Coupons
+    public static final String TABLE_COUPONS = "tbl_coupon";
+    public static final String COLUMN_CID = "id";
+    public static final String COLUMN_DISCOUNT = "discount";
+
+    //Table components for Coupons
+    public static final String TABLE_COUPON_PRODUCTS = "tbl_coupon_products";
+    public static final String COLUMN_CPID = "id";
+    public static final String COLUMN_COUPONID = "coupon_id";
+    public static final String COLUMN_PRODUCTID = "product_id";
+     */
 }

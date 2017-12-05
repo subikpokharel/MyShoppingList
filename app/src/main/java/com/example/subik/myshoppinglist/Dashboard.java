@@ -119,6 +119,15 @@ public class Dashboard extends AppCompatActivity {
             startActivity(i);
             finish();
         }
+        if (id == R.id.nav_largest_discount){
+            Intent i = new Intent(getApplicationContext(), LargestDiscountActivity.class);
+            startActivity(i);
+        }
+        if (id == R.id.nav_best_discount){
+            Intent i = new Intent(getApplicationContext(), BestDiscountActivity.class);
+            startActivity(i);
+        }
+
         if (id == R.id.nav_logout) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);
             // Setting Dialog Title

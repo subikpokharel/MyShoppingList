@@ -37,7 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Table components for Coupons
     public static final String TABLE_COUPON_PRODUCTS = "tbl_coupon_products";
-    public static final String COLUMN_CPID = "id";
+    //public static final String COLUMN_CPID = "id";
     public static final String COLUMN_COUPONID = "coupon_id";
     public static final String COLUMN_PRODUCTID = "product_id";
 
@@ -60,9 +60,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String CREATE_COUPON_PRODUCTS = " CREATE TABLE "+
             TABLE_COUPON_PRODUCTS+" ( "+
-            COLUMN_CPID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            //COLUMN_CPID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             COLUMN_COUPONID+" INTEGER NOT NULL, "+
             COLUMN_PRODUCTID+" INTEGER  NOT NULL, "+
+            "PRIMARY KEY("+COLUMN_COUPONID + "," + COLUMN_PRODUCTID + ")," +
             " FOREIGN KEY ( "+COLUMN_COUPONID+" ) REFERENCES "+TABLE_COUPONS+" ( "+COLUMN_CID+" ) "+
             " ON DELETE CASCADE, "+
             " FOREIGN KEY ( "+COLUMN_PRODUCTID+" ) REFERENCES "+TABLE_PRODUCT+" ( "+COLUMN_PID+" ) "+

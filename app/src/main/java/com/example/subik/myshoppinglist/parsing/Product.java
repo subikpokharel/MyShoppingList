@@ -31,4 +31,12 @@ public class Product {
     public void setProduct(String product) {
         this.product = product;
     }
+
+    public Product(){}
+
+    public Product(int id, String name, String price) {
+        this.id = id;
+        this.product = name;
+        this.price = price;
+    }
 }

@@ -19,6 +19,8 @@
     <string name="menu_enter_product">Enter Product</string>
     <string name="menu_enter_coupon">Enter Coupon</string>
     <string name="menu_list_coupon">List Coupons</string>
+    <string name="menu_largest_discount">Largest Discount</string>
+    <string name="menu_best_discount">Best Discount</string>
     <string name="logout">Logout</string>
 
 
@@ -45,4 +47,10 @@
     <string name="view_coupon_discount">Discount: </string>
     <string name="view_list_products">List of Products: </string>
     <string name="view_coupon_button">Delete Coupon</string>
+
+
+    <string name="largest_discount_budget">Enter your budget</string>
+    <string name="largest_discount_button">Get Discount List</string>
+    <string name="largest_list">List of Products:</string>
+    <string name="best_discount_button">Get Best Discount</string>
 </resources>

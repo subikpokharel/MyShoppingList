@@ -21,6 +21,17 @@
         app:showAsAction="never"
         android:orderInCategory="4"/>
 
+    <item android:id="@+id/nav_largest_discount"
+        android:title="@string/menu_largest_discount"
+        app:showAsAction="never"
+        android:orderInCategory="5"/>
+
+
+    <item android:id="@+id/nav_best_discount"
+        android:title="@string/menu_best_discount"
+        app:showAsAction="never"
+        android:orderInCategory="6"/>
+
     <item android:id="@+id/nav_logout"
         android:title="@string/logout"
         app:showAsAction="never"
