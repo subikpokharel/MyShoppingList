@@ -22,12 +22,15 @@ import com.example.subik.myshoppinglist.myapplication.MyApplication;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListProductActivity extends AppCompatActivity {
     ListView lvProducts;
     ArrayList<Product> productArrayList;
     DatabaseManager databaseManager;
     MyApplication myApplication;
+    Map<Integer,String> checkMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class ListProductActivity extends AppCompatActivity {
         lvProducts = findViewById(R.id.listViewProduct);
         ProductAdapter productAdapter = new ProductAdapter(this,R.layout.product_data,productArrayList);
         lvProducts.setAdapter(productAdapter);
+        checkMap = productAdapter.checkmap;
         /*for (int i =0; i<lvProducts.getChildCount(); i++){
             TextView hyper = lvProducts.getChildAt(i).findViewById(R.id.tvName);
             ListProductActivity.makeTextViewHyperlink(hyper);
@@ -66,6 +70,10 @@ public class ListProductActivity extends AppCompatActivity {
         CheckBox checkBox;
         int dataUpdated = 0;
         ListView listView = findViewById(R.id.listViewProduct);
+
+        for (Map.Entry<Integer, String> entry : checkMap.entrySet()) {
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+        }
         for (int i = 0; i < listView.getChildCount(); i++) {
             checkBox = listView.getChildAt(i).findViewById(R.id.chkBoxDashboad);
             if (checkBox.isChecked()){

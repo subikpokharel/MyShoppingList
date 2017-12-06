@@ -16,6 +16,8 @@ import com.example.subik.myshoppinglist.R;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by subik on 11/30/17.
@@ -27,6 +29,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     ArrayList<Product> list;
     LayoutInflater mlayoutInflater;
     int resource;
+    public final Map<Integer,String> checkmap = new HashMap<>();
 
 
     public ProductAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Product> objects) {
@@ -85,11 +88,21 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                 if ((mViewHolder.checkBox).isChecked()){
                     //Toast.makeText(getContext(),"Hello" ,Toast.LENGTH_LONG).show();
                     mViewHolder.editPrice.setEnabled(true);
+                    checkmap.put(position,mViewHolder.textName.getText().toString());
                 }else{
                     mViewHolder.editPrice.setEnabled(false);
+                    checkmap.remove(position);
                 }
             }
         });
+
+        if(checkmap.containsKey(position)){
+            mViewHolder.checkBox.setChecked(true);
+            mViewHolder.editPrice.setEnabled(true);
+        }else{
+            mViewHolder.checkBox.setChecked(false);
+            mViewHolder.editPrice.setEnabled(false);
+        }
 
 
        //ListProductActivity.make

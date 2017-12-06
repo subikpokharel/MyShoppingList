@@ -30,7 +30,6 @@ public class EnterCouponActivity extends AppCompatActivity {
     ListView listProducts;
     DatabaseManager databaseManager;
     ArrayList<Product> listArrayProducts;
-    MyApplication myApplication;
     Map<Integer,String> checkMap = new HashMap<>();
 
     @Override
@@ -57,8 +56,8 @@ public class EnterCouponActivity extends AppCompatActivity {
 
 
     public  void enterCoupon(View view){
-        CheckBox checkBox;
-        ListView listView = findViewById(R.id.listProducts);
+        //CheckBox checkBox;
+        //ListView listView = findViewById(R.id.listProducts);
         ArrayList<Integer> ids = new ArrayList<>();
         //Toast.makeText(getApplicationContext(),String.valueOf(listView.getChildCount()),Toast.LENGTH_LONG).show();
 

@@ -20,7 +20,9 @@ import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BestDiscountActivity extends AppCompatActivity {
 
@@ -28,6 +30,7 @@ public class BestDiscountActivity extends AppCompatActivity {
     ListView listView;
     DatabaseManager databaseManager;
     ArrayList<Product> listArrayProducts;
+    Map<Integer,String> checkMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,7 @@ public class BestDiscountActivity extends AppCompatActivity {
     private void bindData() {
         CouponEnterAdapter productAdapter = new CouponEnterAdapter(this,R.layout.coupon_products,listArrayProducts);
         listView.setAdapter(productAdapter);
+        checkMap = productAdapter.checkmap;
     }
 
     private void init() {
@@ -53,8 +57,16 @@ public class BestDiscountActivity extends AppCompatActivity {
         CheckBox checkBox;
         double originalCost = 0.00;
         ArrayList<Product> products = new ArrayList<>();
-        ArrayList<String> test = new ArrayList<>();
-        for (int i = 0; i < listView.getChildCount(); i++) {
+        ArrayList<String> product_name = new ArrayList<>();
+
+        for (Map.Entry<Integer, String> entry : checkMap.entrySet()) {
+            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            Product databaseResult = databaseManager.getProductByName(entry.getValue());
+            originalCost += Double.parseDouble(databaseResult.getPrice());
+            products.add(databaseResult);
+            product_name.add(databaseResult.getProduct());
+        }
+        /*for (int i = 0; i < listView.getChildCount(); i++) {
             checkBox = listView.getChildAt(i).findViewById(R.id.chkCouponProduct);
             //Log.e("Number: ", String.valueOf(checkBox));
             if (checkBox.isChecked()){
@@ -64,15 +76,15 @@ public class BestDiscountActivity extends AppCompatActivity {
                 products.add(databaseResult);
                 test.add(databaseResult.getProduct());
 
-                /*Log.e("Updated: ", String.valueOf(textView.getText()));
-                Log.e("Price: ", String.valueOf(originalCost));*/
+                Log.e("Updated: ", String.valueOf(textView.getText()));
+                Log.e("Price: ", String.valueOf(originalCost));
                 Log.e("Product Names: ", databaseResult.getProduct());
             }
-        }
-        Log.e("Price: ", String.valueOf(originalCost));
+        }*/
+        //Log.e("Price: ", String.valueOf(originalCost));
 
         ArrayList<Coupon> coupons = databaseManager.getAllCoupons();
-        Log.e("Database Size: ", String.valueOf(coupons.size()));
+        //Log.e("Database Size: ", String.valueOf(coupons.size()));
 
         for (int i = coupons.size() - 1; i >= 0; i--) {
             boolean bad = false;
@@ -81,7 +93,7 @@ public class BestDiscountActivity extends AppCompatActivity {
 
                 //Log.e("Products I guess: ",coupons.get(i).getProductArrayList().get(j).getProduct());
                 //Log.e("Checking For: ",products);
-                if (!test.contains(coupons.get(i).getProductArrayList().get(j).getProduct())){
+                if (!product_name.contains(coupons.get(i).getProductArrayList().get(j).getProduct())){
                     //Log.e("Not There: ", coupons.get(i).getProductArrayList().get(j).getProduct());
                     bad = true;
                     break;
@@ -92,7 +104,7 @@ public class BestDiscountActivity extends AppCompatActivity {
 
         }
 
-        Log.e("Final Size: ", String.valueOf(coupons.size()));
+        //Log.e("Final Size: ", String.valueOf(coupons.size()));
 
 
         /*for (int i = coupons.size() - 1; i >= 0; i--) {

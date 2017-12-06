@@ -50,7 +50,6 @@ public class ListCouponActivity extends AppCompatActivity implements ListCoupons
        databaseManager.deleteCoupon(id);
        Intent i = new Intent(getApplicationContext(), ListCouponActivity.class);
        startActivity(i);
-       finish();
        //Toast.makeText(getApplicationContext(),"Hello: "+id,Toast.LENGTH_LONG).show();
     }
 
@@ -59,7 +58,6 @@ public class ListCouponActivity extends AppCompatActivity implements ListCoupons
         Intent intent = new Intent(getApplicationContext(), ViewCouponActivity.class);
         intent.putExtra("Coupon Id",String.valueOf(id));
         startActivity(intent);
-        finish();
     }
 
     @Override
