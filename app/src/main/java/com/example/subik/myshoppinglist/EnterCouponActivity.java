@@ -21,6 +21,8 @@ import com.example.subik.myshoppinglist.myapplication.MyApplication;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnterCouponActivity extends AppCompatActivity {
 
@@ -29,6 +31,8 @@ public class EnterCouponActivity extends AppCompatActivity {
     DatabaseManager databaseManager;
     ArrayList<Product> listArrayProducts;
     MyApplication myApplication;
+    Map<Integer,String> checkMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,7 @@ public class EnterCouponActivity extends AppCompatActivity {
     private void bindData() {
         CouponEnterAdapter productAdapter = new CouponEnterAdapter(this,R.layout.coupon_products,listArrayProducts);
         listProducts.setAdapter(productAdapter);
+        checkMap = productAdapter.checkmap;
     }
 
     private void init() {
@@ -56,7 +61,15 @@ public class EnterCouponActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listProducts);
         ArrayList<Integer> ids = new ArrayList<>();
         //Toast.makeText(getApplicationContext(),String.valueOf(listView.getChildCount()),Toast.LENGTH_LONG).show();
-        for (int i = 0; i < listView.getChildCount(); i++) {
+
+        for (Map.Entry<Integer, String> entry : checkMap.entrySet()) {
+            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            int id = databaseManager.getProductId(entry.getValue());
+            ids.add(id);
+        }
+
+
+        /*for (int i = 0; i < listView.getChildCount(); i++) {
             checkBox = listView.getChildAt(i).findViewById(R.id.chkCouponProduct);
             //Log.e("Number: ", String.valueOf(checkBox));
             if (checkBox.isChecked()){
@@ -66,7 +79,7 @@ public class EnterCouponActivity extends AppCompatActivity {
                 ids.add(id);
                 //Log.e("Updated: ", String.valueOf(id));
             }
-        }
+        }*/
         //Log.e("id length", String.valueOf(ids.size()));
         if (ids.size()>0 && !(editDiscount.getText().toString()).isEmpty()){
             long result = databaseManager.insertCoupons(Float.parseFloat(editDiscount.getText().toString()));

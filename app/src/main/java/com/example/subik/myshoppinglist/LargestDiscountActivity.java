@@ -34,9 +34,7 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
     LinearLayout linearLayout;
     ListView listProductList;
     ArrayList<String> arrayList = new ArrayList<>();
-    //ArrayAdapter<String> arrayAdapter;
     DatabaseManager databaseManager;
-    //private final static int offColor = Color.argb(255,220,220,220);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,7 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
             ArrayList<Coupon> databaseResult = databaseManager.getAllCoupons();
 
             //Log.e("Size: ", String.valueOf(budget));
-            List<Coupon> finalCoupons =  new ArrayList<>();
+            List<Coupon> finalCoupons = new ArrayList<>();
             double maximumDiscount = 0;
 
             //Log.e("Size: ", String.valueOf(databaseResult.size()));

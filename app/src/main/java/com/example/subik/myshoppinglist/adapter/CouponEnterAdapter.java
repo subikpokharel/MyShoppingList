@@ -16,6 +16,8 @@ import com.example.subik.myshoppinglist.R;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by subik on 12/1/17.
@@ -27,6 +29,8 @@ public class CouponEnterAdapter extends ArrayAdapter<Product> {
     ArrayList<Product> list;
     LayoutInflater mlayoutInflater;
     int resource;
+    public final Map<Integer,String> checkmap = new HashMap<>();
+
 
 
     public CouponEnterAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Product> objects) {
@@ -63,17 +67,27 @@ public class CouponEnterAdapter extends ArrayAdapter<Product> {
         //mViewHolder.checkBox.setId(product.getId());
         //Toast.makeText(getContext(), String.valueOf(mViewHolder.checkBox.getId()),Toast.LENGTH_LONG).show();
 
+
         mViewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if ((mViewHolder.checkBox).isChecked()){
-                    //Toast.makeText(getContext(),"Hello" ,Toast.LENGTH_LONG).show();
+                    checkmap.put(position,mViewHolder.productName.getText().toString());
+                    //Toast.makeText(getContext(),mViewHolder.productName.getText().toString() ,Toast.LENGTH_LONG).show();
                     mViewHolder.productName.setEnabled(true);
                 }else{
                     mViewHolder.productName.setEnabled(false);
+                    checkmap.remove(position);
                 }
             }
         });
+        if(checkmap.containsKey(position)){
+            mViewHolder.checkBox.setChecked(true);
+            mViewHolder.productName.setEnabled(true);
+        }else{
+            mViewHolder.checkBox.setChecked(false);
+            mViewHolder.productName.setEnabled(false);
+        }
         return convertView;
     }
 
