@@ -30,6 +30,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     LayoutInflater mlayoutInflater;
     int resource;
     public final Map<Integer,String> checkmap = new HashMap<>();
+    public final Map<Integer,String> editMap = new HashMap<>();
 
 
     public ProductAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Product> objects) {
@@ -87,33 +88,28 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             public void onClick(View view) {
                 if ((mViewHolder.checkBox).isChecked()){
                     //Toast.makeText(getContext(),"Hello" ,Toast.LENGTH_LONG).show();
-                    mViewHolder.editPrice.setEnabled(true);
+                    //mViewHolder.editPrice.setEnabled(true);
                     checkmap.put(position,mViewHolder.textName.getText().toString());
+                    //Toast.makeText(getContext(),mViewHolder.editPrice.getText().toString() ,Toast.LENGTH_LONG).show();
+                    editMap.put(position,mViewHolder.editPrice.getText().toString());
                 }else{
-                    mViewHolder.editPrice.setEnabled(false);
+                    //mViewHolder.editPrice.setEnabled(false);
                     checkmap.remove(position);
+                    editMap.remove(position);
                 }
             }
         });
 
         if(checkmap.containsKey(position)){
             mViewHolder.checkBox.setChecked(true);
-            mViewHolder.editPrice.setEnabled(true);
+            mViewHolder.editPrice.setText(editMap.get(position));
+            //Toast.makeText(getContext(),editMap.get(position) ,Toast.LENGTH_LONG).show();
+
+            //mViewHolder.editPrice.setEnabled(true);
         }else{
             mViewHolder.checkBox.setChecked(false);
-            mViewHolder.editPrice.setEnabled(false);
+            //mViewHolder.editPrice.setEnabled(false);
         }
-
-
-       //ListProductActivity.make
-        /*SpannableStringBuilder ssb = new SpannableStringBuilder( );
-        ssb.append( mViewHolder.textName.getText( ) );
-        ssb.setSpan( new URLSpan("#"), 0, ssb.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
-        mViewHolder.textName.setText( ssb, TextView.BufferType.SPANNABLE );
-
-        mViewHolder.textName.setText(product.getProduct());*/
-
         return convertView;
     }
 
@@ -128,16 +124,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             textName = view.findViewById(R.id.tvName);
             editPrice = view.findViewById(R.id.etPrice);
             checkBox = view.findViewById(R.id.chkBoxDashboad);
-            editPrice.setEnabled(false);
-
-
-            //checkBox.setOnCheckedChangeListener();
-            //checkBox = view.findViewById(R.id.checkbox);
-            //mcontext.makeTextViewHyperlink
-            //mcontext.getContext()
-            //ListProductActivity.makeTextViewHyperlink(textName);
-
-
+            //editPrice.setEnabled(false);
 
         }
     }

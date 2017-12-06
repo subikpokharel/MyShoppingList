@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.subik.myshoppinglist.parsing.Coupon;
 import com.example.subik.myshoppinglist.parsing.Product;
@@ -22,10 +23,12 @@ public class DatabaseManager {
     private static DatabaseManager dbManager;
     private static SQLiteDatabase db;
     private static SQLiteDatabase database;
+    private static DatabaseHandler databaseHandler;
     private long rowInserted;
     private DatabaseManager(Context context) {
         createWritableDatabse(context);
         createReadableDatabse(context);
+        databaseHandler = new DatabaseHandler(context);
 
     }
     public static DatabaseManager getDatabaseManager(Context context) {
@@ -243,6 +246,13 @@ public class DatabaseManager {
         }
         cursor.close();
         return product;
+    }
+
+
+    public void resetSystem(){
+
+        databaseHandler.onUpgrade(db,1,2);
+
     }
 
 

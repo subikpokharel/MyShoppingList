@@ -35,8 +35,9 @@
         <activity
             android:name=".LargestDiscountActivity"
             android:label="Generate Largest Discount" />
-        <activity android:name=".BestDiscountActivity"
-            android:label="Find Best Discount"/>
+        <activity
+            android:name=".BestDiscountActivity"
+            android:label="Find Best Discount" />
     </application>
 
 </manifest>

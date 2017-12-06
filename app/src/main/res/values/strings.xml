@@ -22,7 +22,7 @@
     <string name="menu_list_coupon">List Coupons</string>
     <string name="menu_largest_discount">Largest Discount</string>
     <string name="menu_best_discount">Best Discount</string>
-    <string name="logout">Logout</string>
+    <string name="reset">Reset System</string>
 
 
     <string name="product_name">Product Name</string>
