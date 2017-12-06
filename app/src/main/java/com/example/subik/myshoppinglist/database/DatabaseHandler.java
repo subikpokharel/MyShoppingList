@@ -72,8 +72,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
-            db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPONS);
-            db.execSQL("DROP TABLE IF EXISTS " + CREATE_COUPON_PRODUCTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUPONS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUPON_PRODUCTS);
             onCreate(db);
         }
     }

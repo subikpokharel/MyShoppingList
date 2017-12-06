@@ -59,10 +59,10 @@ public class BestDiscountActivity extends AppCompatActivity {
                 products.add(databaseResult);
                 /*Log.e("Updated: ", String.valueOf(textView.getText()));
                 Log.e("Price: ", String.valueOf(originalCost));*/
+                Log.e("Product Names: ", databaseResult.getProduct());
             }
         }
         Log.e("Price: ", String.valueOf(originalCost));
-
     }
 }
 

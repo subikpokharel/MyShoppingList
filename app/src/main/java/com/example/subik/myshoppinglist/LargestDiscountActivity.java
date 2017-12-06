@@ -23,6 +23,7 @@ import com.example.subik.myshoppinglist.parsing.Coupon;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,38 +57,76 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
 
-        if(editBudget.getText().toString().isEmpty()) {
+        if(editBudget.getText().toString().isEmpty() || (Double.parseDouble(editBudget.getText().toString()) == 0)) {
             editBudget.setError("Please enter a budget");
         }else {
             Double budget = Double.valueOf(editBudget.getText().toString());
             ArrayList<Coupon> databaseResult = databaseManager.getAllCoupons();
 
-            Double remainingBudget = budget;
-            //Toast.makeText(this,String.valueOf(),Toast.LENGTH_LONG).show();
-            //Coupon.DiscountResult result = Coupon.generateLargestDiscount(databaseResult,budget);
-            Double cost = 0.0;
-            List<String> product_name = new ArrayList<String>();
-            List<Coupon> eligibleCoupons = new ArrayList<Coupon>();
+            //Log.e("Size: ", String.valueOf(budget));
+            List<Coupon> finalCoupons =  new ArrayList<>();
+            double maximumDiscount = 0;
+
+            //Log.e("Size: ", String.valueOf(databaseResult.size()));
             for (int i = 0; i<databaseResult.size(); i++){
                 Coupon coupon = databaseResult.get(i);
-                if (remainingBudget >= TotalCost(coupon.getId()) && Collections.disjoint(product_name,getProductNames(coupon.getId()))){
-                    Log.e("Eligible Products: ", coupon.toString());
-                    eligibleCoupons.add(coupon);
-                    product_name.addAll(getProductNames(coupon.getId()));
-                    remainingBudget = remainingBudget - TotalCost(coupon.getId());
-                    cost +=   TotalCost(coupon.getId());
+                //System.out.println("Main coupon: "+coupon.getDiscount().toString());
+                List<String> productNames = new ArrayList<String>();
+                List<Coupon> eligibleCoupons = new ArrayList<>();
+                Double remainingBudget = budget;
+                double maximumCurrentDiscount = 0;
+                remainingBudget = remainingBudget-TotalCost(coupon.getId())+coupon.getDiscount();
+                if (remainingBudget<0)
+                    continue;
+                eligibleCoupons.add(coupon);
+                productNames.addAll(getProductNames(coupon.getId()));
+                maximumCurrentDiscount+=coupon.getDiscount();
+                //System.out.println("product names: "+productNames.toString());
+                //System.out.println("Remaining: "+remainingBudget.toString());
+
+                for (int j = 0; j<databaseResult.size(); j++){
+                    Coupon coupon1 = databaseResult.get(j);
+                    if (coupon1.getId().equals(coupon.getId()))
+                        continue;
+
+                    //System.out.println("ID going to check: "+coupon1.getId().toString());
+
+                    if (remainingBudget >= (TotalCost(coupon1.getId())-coupon1.getDiscount()) && Collections.disjoint(productNames,getProductNames(coupon1.getId()))){
+                        //System.out.println("Eligible Products: "+coupon1.toString());
+                        eligibleCoupons.add(coupon1);
+                        productNames.addAll(getProductNames(coupon1.getId()));
+                        //remainingBudget = remainingBudget - TotalCost(coupon.getId());
+                        remainingBudget = remainingBudget-TotalCost(coupon1.getId())+coupon1.getDiscount();
+                        maximumCurrentDiscount += coupon1.getDiscount();
+                        //cost +=   TotalCost(coupon.getId());
+                    }
                 }
+                //System.out.println("Current: "+maximumCurrentDiscount);
+                //System.out.println("max : "+maximumDiscount);
+                if (maximumCurrentDiscount>maximumDiscount){
+                    /*System.out.println("Eligible coupons with discount: "+ maximumCurrentDiscount);
+                    for (Coupon coupon3:eligibleCoupons){
+                        System.out.println(coupon3.toString());
+                    }*/
+                    maximumDiscount = maximumCurrentDiscount;
+                    finalCoupons = new ArrayList<>();
+                    finalCoupons.addAll(eligibleCoupons);
+                }
+
             }
 
 
+            arrayList.clear();
             Double discount = 0.0;
-            for (int count =0; count<eligibleCoupons.size(); count++){
+            Double cost = 0.0;
+            for (int count =0; count<finalCoupons.size(); count++){
                 //Log.e("ID: ", String.valueOf(eligibleCoupons.get(count).getId()));
                 //Log.e("Discount: ", String.valueOf(eligibleCoupons.get(count).getDiscount()));
-                discount += eligibleCoupons.get(count).getDiscount();
-                ArrayList<Product> product = eligibleCoupons.get(count).getProductArrayList();
+                discount += finalCoupons.get(count).getDiscount();
+                ArrayList<Product> product = finalCoupons.get(count).getProductArrayList();
                 for (int j = 0; j<product.size(); j++){
                     arrayList.add(product.get(j).getProduct());
+                    cost += Double.parseDouble(product.get(j).getPrice());
                     //Log.e("Names : ", String.valueOf(product.get(j).getProduct()));
                 }
             }
@@ -98,6 +137,8 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
             txtGenCost.setTextColor(Color.BLUE);
             txtGenCost.setTypeface(Typeface.DEFAULT_BOLD);
             linearLayout.addView(txtGenCost);
+
+            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter();
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
             arrayAdapter.notifyDataSetChanged();
@@ -114,8 +155,11 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
             String name = databaseResult.get(i).getProduct();
             names.add(name);
         }
+        //System.out.print("Names Received: "+ names.toString());
         return names;
     }
+
+
 
     private Double TotalCost(Integer id) {
         ArrayList<Product> databaseResult = databaseManager.selectCouponProductById(id);
@@ -171,10 +215,102 @@ public class LargestDiscountActivity extends AppCompatActivity implements View.O
 
 
 
+/*Double cost = 0.0;
+            List<String> product_name = new ArrayList<String>();
+            List<Coupon> eligibleCoupons = new ArrayList<Coupon>();
+            for (int i = 0; i<databaseResult.size(); i++){
+                Coupon coupon = databaseResult.get(i);
+                if (remainingBudget >= TotalCost(coupon.getId()) && Collections.disjoint(product_name,getProductNames(coupon.getId()))){
+                    Log.e("Eligible Products: ", coupon.toString());
+                    eligibleCoupons.add(coupon);
+                    product_name.addAll(getProductNames(coupon.getId()));
+                    remainingBudget = remainingBudget - TotalCost(coupon.getId());
+                    cost +=   TotalCost(coupon.getId());
+                }
+            }*/
 
 
 
 
+/*
+
+ List<Coupon> eligibleCoupons = new ArrayList<>();
+            List<Coupon> finalCoupons = new ArrayList<>();
+            double maximumDiscount = 0;
+
+            for (int i = 0; i < databaseResult.size(); i++) {
+                Coupon coupon = databaseResult.get(i);
+                System.out.println("Main coupon: " + coupon.toString());
+                //selected items array
+                List<String> productNames = new ArrayList<String>();
+                //double remainingBudget = budget;
+                eligibleCoupons = new ArrayList<>();
+                double maximumCurrentDiscount = 0;
+                eligibleCoupons.add(coupon);
+                productNames.addAll(getProductNames(coupon.getId()));
+                remainingBudget = remainingBudget - TotalCost(coupon.getId()) + coupon.getDiscount();
+                maximumCurrentDiscount += coupon.getDiscount();
+
+                for (int j = 0; j < databaseResult.size(); j++) {
+                    Coupon coupon1 = databaseResult.get(j);
+                    if (coupon1.getId() == coupon.getId())
+                        continue;
+                    Log.e(">>>>>Inside", coupon1.toString());
+                    Log.e("REmaining budget: ", String.valueOf(remainingBudget));
+                    if (remainingBudget >= (TotalCost(coupon1.getId()) - coupon1.getDiscount()) && Collections.disjoint(productNames, getProductNames(coupon1.getId()))) {
+                        Log.e("Eligible Products: ", coupon1.toString());
+                        eligibleCoupons.add(coupon1);
+                        productNames.addAll(getProductNames(coupon1.getId()));
+                        remainingBudget = remainingBudget - TotalCost(coupon1.getId()) + coupon1.getDiscount();
+                        //cost +=   TotalCost(coupon1.getId());
+                        maximumCurrentDiscount += coupon1.getDiscount();
+                    }
+                }
+
+                if (maximumCurrentDiscount > maximumDiscount) {
+                    Log.e("E coupon w discount: ", String.valueOf(maximumCurrentDiscount));
+                    for (Coupon coupon3 : eligibleCoupons) {
+                        Log.e("Finally: ", coupon3.toString());
+                    }
+                    maximumDiscount = maximumCurrentDiscount;
+                    finalCoupons = new ArrayList<>();
+                    finalCoupons.addAll(eligibleCoupons);
+                }
+
+            }
+
+
+
+            arrayList.clear();
+            Double discount = 0.0;
+            Double cost = 0.0;
+            for (int count =0; count<finalCoupons.size(); count++){
+                //Log.e("ID: ", String.valueOf(eligibleCoupons.get(count).getId()));
+                //Log.e("Discount: ", String.valueOf(eligibleCoupons.get(count).getDiscount()));
+                discount += finalCoupons.get(count).getDiscount();
+                ArrayList<Product> product = finalCoupons.get(count).getProductArrayList();
+                for (int j = 0; j<product.size(); j++){
+                    arrayList.add(product.get(j).getProduct());
+                    cost += Double.parseDouble(product.get(j).getPrice());
+                    //Log.e("Names : ", String.valueOf(product.get(j).getProduct()));
+                }
+            }
+            cost = cost -discount;
+            linearLayout.removeAllViews();
+            TextView txtGenCost = new TextView(getApplicationContext());
+            txtGenCost.setText("Total Cost: "+String.format("%.2f",cost)+" After "+String.format("%.2f",discount)+ " Discount");
+            txtGenCost.setTextColor(Color.BLUE);
+            txtGenCost.setTypeface(Typeface.DEFAULT_BOLD);
+            linearLayout.addView(txtGenCost);
+
+            //ArrayAdapter<String> arrayAdapter = new ArrayAdapter();
+
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
+            arrayAdapter.notifyDataSetChanged();
+            listProductList.setAdapter(arrayAdapter);
+
+ */
 
 
 

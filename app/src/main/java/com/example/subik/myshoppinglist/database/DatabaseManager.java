@@ -2,20 +2,14 @@ package com.example.subik.myshoppinglist.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.example.subik.myshoppinglist.adapter.ListCouponsAdapter;
 import com.example.subik.myshoppinglist.parsing.Coupon;
-import com.example.subik.myshoppinglist.parsing.Customer;
 import com.example.subik.myshoppinglist.parsing.Product;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * Created by subik on 11/29/17.
@@ -204,10 +198,15 @@ public class DatabaseManager {
                 " JOIN "+DatabaseHandler.TABLE_PRODUCT+" p ON p."+DatabaseHandler.COLUMN_PID+" = cp."+DatabaseHandler.COLUMN_PRODUCTID+
                 " ORDER BY c."+DatabaseHandler.COLUMN_CID+" ASC";*/
 
+        /*query = " SELECT c.*, p.* FROM "+DatabaseHandler.TABLE_COUPONS+
+                " c JOIN "+DatabaseHandler.TABLE_COUPON_PRODUCTS+" cp ON c."+DatabaseHandler.COLUMN_CID+" = cp."+DatabaseHandler.COLUMN_COUPONID+
+                " JOIN "+DatabaseHandler.TABLE_PRODUCT+" p ON p."+DatabaseHandler.COLUMN_PID+" = cp."+DatabaseHandler.COLUMN_PRODUCTID+
+                " ORDER BY c."+DatabaseHandler.COLUMN_DISCOUNT+" DESC";*/
+
         query = " SELECT c.*, p.* FROM "+DatabaseHandler.TABLE_COUPONS+
                 " c JOIN "+DatabaseHandler.TABLE_COUPON_PRODUCTS+" cp ON c."+DatabaseHandler.COLUMN_CID+" = cp."+DatabaseHandler.COLUMN_COUPONID+
                 " JOIN "+DatabaseHandler.TABLE_PRODUCT+" p ON p."+DatabaseHandler.COLUMN_PID+" = cp."+DatabaseHandler.COLUMN_PRODUCTID+
-                " ORDER BY c."+DatabaseHandler.COLUMN_DISCOUNT+" DESC";
+                " ORDER BY c."+DatabaseHandler.COLUMN_CID+" ASC";
 
         cursor = database.rawQuery(query, null);
 
